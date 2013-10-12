@@ -21,8 +21,6 @@ function draw(){
 
     i = fish.length - 1;
     if(i >= 0){
-        buffer.fillStyle = '#888';
-
         // set position now to simplify fish placement math
         buffer.translate(
             x - camera_x,
@@ -34,8 +32,8 @@ function draw(){
             fish[i][0] -= fish[i][2];
 
             // if a fish travels past the edge of the screen, swap it to the other edge
-            if(fish[i][0] > camera_x + x + 50 || fish[i][0] < camera_x - x - 50){
-                fish[i][0] = camera_x + (fish[i][0] > camera_x + x ? -x - 50 : x + 50);
+            if(fish[i][0] > camera_x + x + fish[i][4] * 4 || fish[i][0] < camera_x - x - fish[i][4] * 4){
+                fish[i][0] = camera_x + (fish[i][0] > camera_x + x ? -x - fish[i][4] * 4 : x + fish[i][4] * 4);
 
                 // randomize fish y position
                 fish[i][1] = camera_y + random_number(height) - y;
@@ -48,25 +46,27 @@ function draw(){
             buffer.beginPath();
             buffer.moveTo(
                 fish[i][0],
+                fish[i][1] + fish[i][4] / 2
+            );
+            buffer.lineTo(
+                fish[i][0] + fish[i][4] * dir,
                 fish[i][1]
             );
             buffer.lineTo(
-                fish[i][0] + 15 * dir,
-                fish[i][1] - 10
+                fish[i][0] + fish[i][4] * 3 * dir,
+                fish[i][1] + fish[i][4]
             );
             buffer.lineTo(
-                fish[i][0] + 45 * dir,
-                fish[i][1] + 10
+                fish[i][0] + fish[i][4] * 3 * dir,
+                fish[i][1]
             );
             buffer.lineTo(
-                fish[i][0] + 45 * dir,
-                fish[i][1] - 10
-            );
-            buffer.lineTo(
-                fish[i][0] + 15 * dir,
-                fish[i][1] + 10
+                fish[i][0] + fish[i][4] * dir,
+                fish[i][1] + fish[i][4]
             );
             buffer.closePath();
+
+            buffer.fillStyle = fish[i][3];
             buffer.fill();
         }while(i--);
 
@@ -92,6 +92,10 @@ function draw(){
 
 function get(i){
     return document.getElementById(i)
+}
+
+function hex(){
+    return '0123456789abcdef'.charAt(random_number(17))
 }
 
 function random_number(i){
@@ -134,7 +138,9 @@ do{
     fish.push([
         random_number(width) - x,// x
         random_number(height) - y,// y
-        Math.random() * 10 - 5// movement speed
+        Math.random() * 10 - 5,// movement speed
+        '#' + hex() + hex() + hex() + hex() + hex() + hex(),// color
+        random_number(50) + 5// size
     ]);
 }while(i--);
 
