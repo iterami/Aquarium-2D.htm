@@ -1,3 +1,13 @@
+function create_fish(){
+    fish.push([
+        random_number(width) - x,// x
+        random_number(height) - y,// y
+        Math.random() * 10 - 5,// movement speed
+        '#' + hex() + hex() + hex(),// color
+        random_number(50) + 5// size
+    ]);
+}
+
 function draw(){
     if(key_left){
         camera_x -= 5;
@@ -77,6 +87,38 @@ function draw(){
         )
     }
 
+    // draw toolbar background
+    buffer.fillStyle = '#444';
+    buffer.fillRect(
+        0,
+        0,
+        50,
+        50
+    );
+
+    // draw + UI button
+    buffer.fillStyle = '#fff';
+    buffer.fillRect(
+        10,
+        20,
+        30,
+        10
+    );
+    buffer.fillRect(
+        20,
+        10,
+        10,
+        30
+    );
+
+    // draw current camera position
+    buffer.font = '23pt sans-serif';
+    buffer.fillText(
+        camera_x + 'x' + camera_y + 'y',
+        0,
+        height - 10
+    );
+
     canvas.clearRect(
         0,
         0,
@@ -135,13 +177,7 @@ resize();
 
 // create 10 randomly placed fish
 do{
-    fish.push([
-        random_number(width) - x,// x
-        random_number(height) - y,// y
-        Math.random() * 10 - 5,// movement speed
-        '#' + hex() + hex() + hex() + hex() + hex() + hex(),// color
-        random_number(50) + 5// size
-    ]);
+    create_fish();
 }while(i--);
 
 setInterval(
@@ -170,6 +206,9 @@ window.onkeydown = function(e){
     }else if(key == 72){// H
         camera_x = 0;
         camera_y = 0;
+
+    }else if(key == 70){// F
+        create_fish();
     }
 };
 
@@ -188,5 +227,14 @@ window.onkeyup = function(e){
 
     }else if(key == 87){// W
         key_up = 0;
+    }
+};
+
+window.onmousedown = function(e){
+    e.preventDefault();
+
+    // if user clicks on the + UI button, create a fish
+    if(e.pageX < 50 && e.pageY < 50){
+        create_fish();
     }
 };
