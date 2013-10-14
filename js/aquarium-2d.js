@@ -87,16 +87,25 @@ function draw(){
         )
     }
 
-    // draw toolbar background
+    // draw toolbar buttons
     buffer.fillStyle = '#444';
-    buffer.fillRect(
-        0,
-        0,
-        50,
-        50
-    );
+    buffer.strokeStyle = '#000';
+    buffer.lineWidth = 2;
+    i = 1;
+    do{
+        buffer.beginPath();
+        buffer.rect(
+            0,
+            50 * i,
+            50,
+            50
+        );
+        buffer.closePath();
+        buffer.fill();
+        buffer.stroke();
+    }while(i--);
 
-    // draw + UI button
+    // draw create fish button +
     buffer.fillStyle = '#fff';
     buffer.fillRect(
         10,
@@ -118,6 +127,30 @@ function draw(){
         0,
         height - 10
     );
+
+    // draw clear button X
+    buffer.beginPath();
+    buffer.moveTo(
+        10,
+        60
+    );
+    buffer.lineTo(
+        40,
+        90
+    );
+    buffer.moveTo(
+        40,
+        60
+    );
+    buffer.lineTo(
+        10,
+        90
+    );
+    buffer.closePath();
+    buffer.strokeStyle = '#f00';
+    buffer.lineWidth = 5;
+    buffer.stroke();
+
 
     canvas.clearRect(
         0,
@@ -209,6 +242,9 @@ window.onkeydown = function(e){
 
     }else if(key == 70){// F
         create_fish();
+
+    }else if(key == 67){// C
+        fish.length = 0;
     }
 };
 
@@ -233,8 +269,15 @@ window.onkeyup = function(e){
 window.onmousedown = function(e){
     e.preventDefault();
 
-    // if user clicks on the + UI button, create a fish
-    if(e.pageX < 50 && e.pageY < 50){
-        create_fish();
+    // check if clicked on a UI button
+    if(e.pageX < 50){
+        // create fish button
+        if(e.pageY < 50){
+            create_fish();
+
+        // clear all fish button
+        }else if(e.pageY < 100){
+            fish.length = 0;
+        }
     }
 };
