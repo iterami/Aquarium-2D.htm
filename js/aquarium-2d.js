@@ -170,7 +170,7 @@ function get(i){
 }
 
 function hex(){
-    return '0123456789abcdef'.charAt(random_number(17))
+    return '0123456789abcdef'.charAt(random_number(16))
 }
 
 function random_number(i){
