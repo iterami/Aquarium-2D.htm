@@ -10,16 +10,16 @@ function create_fish(){
 
 function draw(){
     if(key_left){
-        camera_x -= 5;
+        camera_x -= 5 * key_sprint;
     }
     if(key_right){
-        camera_x += 5;
+        camera_x += 5 * key_sprint;
     }
     if(key_down){
-        camera_y += 5;
+        camera_y += 5 * key_sprint;
     }
     if(key_up){
-        camera_y -= 5;
+        camera_y -= 5 * key_sprint;
     }
 
     buffer.clearRect(
@@ -201,6 +201,7 @@ var key = 0;
 var key_down = 0;
 var key_left = 0;
 var key_right = 0;
+var key_sprint = 1;
 var key_up = 0;
 var width = 0;
 var x = 0;
@@ -236,6 +237,9 @@ window.onkeydown = function(e){
     }else if(key == 87){// W
         key_up = 1;
 
+    }else if(key == 16){// shift
+        key_sprint = 2;
+
     }else if(key == 72){// H
         camera_x = 0;
         camera_y = 0;
@@ -263,6 +267,9 @@ window.onkeyup = function(e){
 
     }else if(key == 87){// W
         key_up = 0;
+
+    }else if(key == 16){// shift
+        key_sprint = 1;
     }
 };
 
