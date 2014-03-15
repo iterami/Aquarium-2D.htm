@@ -159,14 +159,10 @@ function draw(){
         height
     );
     canvas.drawImage(
-        get('buffer'),
+        document.getElementById('buffer'),
         0,
         0
     );
-}
-
-function get(i){
-    return document.getElementById(i)
 }
 
 function hex(){
@@ -179,21 +175,21 @@ function random_number(i){
 
 function resize(){
     width = window.innerWidth;
-    get('buffer').width = width;
-    get('canvas').width = width;
+    document.getElementById('buffer').width = width;
+    document.getElementById('canvas').width = width;
 
     height = window.innerHeight;
-    get('buffer').height = height;
-    get('canvas').height = height;
+    document.getElementById('buffer').height = height;
+    document.getElementById('canvas').height = height;
 
     x = width / 2;
     y = height / 2;
 }
 
-var buffer = get('buffer').getContext('2d');
+var buffer = document.getElementById('buffer').getContext('2d');
 var camera_x = 0;
 var camera_y = 0;
-var canvas = get('canvas').getContext('2d');
+var canvas = document.getElementById('canvas').getContext('2d');
 var fish = [];
 var height = 0;
 var i = 9;
