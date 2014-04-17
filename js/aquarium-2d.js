@@ -1,10 +1,31 @@
 function create_fish(){
+    // determine fish class
+    var fish_class = Math.random();
+
+    var fish_size = 0;
+    // 60% chance to be normal sized fish
+    if(fish_class < .6){
+        fish_size = random_number(25) + 25;
+
+    // 70% chance to be a small fish, if not a normal sized fish
+    }else if(fish_class < .88){
+        fish_size = random_number(10) + 5;
+
+    // else is a giant fish
+    }else{
+        fish_size = random_number(500) + 50;
+    }
+
+    var fish_speed = Math.random() * 10 - 5;
+
     fish.push([
-        random_number(width) - x,// x
-        random_number(height) - y,// y
-        Math.random() * 10 - 5,// movement speed
+        fish_speed < 0// x
+          ? camera_x - x - fish_size
+          : camera_x + x + fish_size,
+        camera_y + random_number(height) - y,// y
+        fish_speed,
         '#' + hex() + hex() + hex(),// color
-        random_number(50) + 5// size
+        fish_size
     ]);
 }
 
@@ -45,39 +66,44 @@ function draw(){
             if(fish[i][0] > camera_x + x + fish[i][4] * 4 || fish[i][0] < camera_x - x - fish[i][4] * 4){
                 fish[i][0] = camera_x + (fish[i][0] > camera_x + x ? -x - fish[i][4] * 4 : x + fish[i][4] * 4);
 
-                // randomize fish y position
-                fish[i][1] = camera_y + random_number(height) - y;
+                // replace fish
+                fish.splice(
+                  i,
+                  1
+                );
+                create_fish();
+
+            }else{
+                // determine movement direction based on speed
+                var dir = fish[i][2] > 0 ? 1 : -1;
+
+                // draw fish
+                buffer.beginPath();
+                buffer.moveTo(
+                    fish[i][0],
+                    fish[i][1] + fish[i][4] / 2
+                );
+                buffer.lineTo(
+                    fish[i][0] + fish[i][4] * dir,
+                    fish[i][1]
+                );
+                buffer.lineTo(
+                    fish[i][0] + fish[i][4] * 3 * dir,
+                    fish[i][1] + fish[i][4]
+                );
+                buffer.lineTo(
+                    fish[i][0] + fish[i][4] * 3 * dir,
+                    fish[i][1]
+                );
+                buffer.lineTo(
+                    fish[i][0] + fish[i][4] * dir,
+                    fish[i][1] + fish[i][4]
+                );
+                buffer.closePath();
+
+                buffer.fillStyle = fish[i][3];
+                buffer.fill();
             }
-
-            // determine movement direction based on speed
-            var dir = fish[i][2] > 0 ? 1 : -1;
-
-            // draw fish
-            buffer.beginPath();
-            buffer.moveTo(
-                fish[i][0],
-                fish[i][1] + fish[i][4] / 2
-            );
-            buffer.lineTo(
-                fish[i][0] + fish[i][4] * dir,
-                fish[i][1]
-            );
-            buffer.lineTo(
-                fish[i][0] + fish[i][4] * 3 * dir,
-                fish[i][1] + fish[i][4]
-            );
-            buffer.lineTo(
-                fish[i][0] + fish[i][4] * 3 * dir,
-                fish[i][1]
-            );
-            buffer.lineTo(
-                fish[i][0] + fish[i][4] * dir,
-                fish[i][1] + fish[i][4]
-            );
-            buffer.closePath();
-
-            buffer.fillStyle = fish[i][3];
-            buffer.fill();
         }while(i--);
 
         // reset fish placement
