@@ -149,9 +149,14 @@ function draw(){
     // draw current camera position
     buffer.font = '23pt sans-serif';
     buffer.fillText(
-        camera_x + 'x' + camera_y + 'y',
+        camera_x + 'x ' + camera_y + 'y',
         0,
         height - 10
+    );
+    buffer.fillText(
+        fish.length + ' fish',
+        0,
+        height - 40
     );
 
     // draw clear button X
