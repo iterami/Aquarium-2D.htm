@@ -19,13 +19,13 @@ function create_fish(){
     var fish_speed = Math.random() * 10 - 5;
 
     fish.push([
-        fish_speed < 0// x
-          ? camera_x - x - fish_size
-          : camera_x + x + fish_size,
-        camera_y + random_number(height) - y,// y
-        fish_speed,
-        '#' + hex() + hex() + hex(),// color
-        fish_size
+      fish_speed < 0// x
+        ? camera_x - x - fish_size
+        : camera_x + x + fish_size,
+      camera_y + random_number(height) - y,// y
+      fish_speed,
+      '#' + hex() + hex() + hex(),// color
+      fish_size
     ]);
 }
 
@@ -44,18 +44,18 @@ function draw(){
     }
 
     buffer.clearRect(
-        0,
-        0,
-        width,
-        height
+      0,
+      0,
+      width,
+      height
     );
 
     i = fish.length - 1;
     if(i >= 0){
         // set position now to simplify fish placement math
         buffer.translate(
-            x - camera_x,
-            y - camera_y
+          x - camera_x,
+          y - camera_y
         );
 
         do{
@@ -80,24 +80,24 @@ function draw(){
                 // draw fish
                 buffer.beginPath();
                 buffer.moveTo(
-                    fish[i][0],
-                    fish[i][1] + fish[i][4] / 2
+                  fish[i][0],
+                  fish[i][1] + fish[i][4] / 2
                 );
                 buffer.lineTo(
-                    fish[i][0] + fish[i][4] * dir,
-                    fish[i][1]
+                  fish[i][0] + fish[i][4] * dir,
+                  fish[i][1]
                 );
                 buffer.lineTo(
-                    fish[i][0] + fish[i][4] * 3 * dir,
-                    fish[i][1] + fish[i][4]
+                  fish[i][0] + fish[i][4] * 3 * dir,
+                  fish[i][1] + fish[i][4]
                 );
                 buffer.lineTo(
-                    fish[i][0] + fish[i][4] * 3 * dir,
-                    fish[i][1]
+                  fish[i][0] + fish[i][4] * 3 * dir,
+                  fish[i][1]
                 );
                 buffer.lineTo(
-                    fish[i][0] + fish[i][4] * dir,
-                    fish[i][1] + fish[i][4]
+                  fish[i][0] + fish[i][4] * dir,
+                  fish[i][1] + fish[i][4]
                 );
                 buffer.closePath();
 
@@ -108,9 +108,9 @@ function draw(){
 
         // reset fish placement
         buffer.translate(
-            camera_x - x,
-            camera_y - y
-        )
+          camera_x - x,
+          camera_y - y
+        );
     }
 
     // draw toolbar buttons
@@ -121,10 +121,10 @@ function draw(){
     do{
         buffer.beginPath();
         buffer.rect(
-            0,
-            50 * i,
-            50,
-            50
+          0,
+          50 * i,
+          50,
+          50
         );
         buffer.closePath();
         buffer.fill();
@@ -134,48 +134,48 @@ function draw(){
     // draw create fish button +
     buffer.fillStyle = '#fff';
     buffer.fillRect(
-        10,
-        20,
-        30,
-        10
+      10,
+      20,
+      30,
+      10
     );
     buffer.fillRect(
-        20,
-        10,
-        10,
-        30
+      20,
+      10,
+      10,
+      30
     );
 
     // draw current camera position
     buffer.font = '23pt sans-serif';
     buffer.fillText(
-        camera_x + 'x ' + camera_y + 'y',
-        0,
-        height - 10
+      camera_x + 'x ' + camera_y + 'y',
+      0,
+      height - 10
     );
     buffer.fillText(
-        fish.length + ' fish',
-        0,
-        height - 40
+      fish.length + ' fish',
+      0,
+      height - 40
     );
 
     // draw clear button X
     buffer.beginPath();
     buffer.moveTo(
-        10,
-        60
+      10,
+      60
     );
     buffer.lineTo(
-        40,
-        90
+      40,
+      90
     );
     buffer.moveTo(
-        40,
-        60
+      40,
+      60
     );
     buffer.lineTo(
-        10,
-        90
+      10,
+      90
     );
     buffer.closePath();
     buffer.strokeStyle = '#f00';
@@ -184,37 +184,36 @@ function draw(){
 
 
     canvas.clearRect(
-        0,
-        0,
-        width,
-        height
+      0,
+      0,
+      width,
+      height
     );
     canvas.drawImage(
-        document.getElementById('buffer'),
-        0,
-        0
+      document.getElementById('buffer'),
+      0,
+      0
     );
 }
 
 function hex(){
-    return '0123456789abcdef'.charAt(random_number(16))
+    return '0123456789abcdef'.charAt(random_number(16));
 }
 
 function random_number(i){
-    return Math.floor(Math.random() * i)
+    return Math.floor(Math.random() * i);
 }
 
 function resize(){
-    width = window.innerWidth;
-    document.getElementById('buffer').width = width;
-    document.getElementById('canvas').width = width;
-
     height = window.innerHeight;
     document.getElementById('buffer').height = height;
     document.getElementById('canvas').height = height;
-
-    x = width / 2;
     y = height / 2;
+
+    width = window.innerWidth;
+    document.getElementById('buffer').width = width;
+    document.getElementById('canvas').width = width;
+    x = width / 2;
 }
 
 var buffer = document.getElementById('buffer').getContext('2d');
@@ -224,7 +223,6 @@ var canvas = document.getElementById('canvas').getContext('2d');
 var fish = [];
 var height = 0;
 var i = 9;
-var key = 0;
 var key_down = 0;
 var key_left = 0;
 var key_right = 0;
@@ -242,14 +240,14 @@ do{
 }while(i--);
 
 setInterval(
-    'draw()',
-    30
+  'draw()',
+  30
 );
 
 window.onresize = resize;
 
 window.onkeydown = function(e){
-    key = window.event ? event : e;
+    var key = window.event ? event : e;
     key = key.charCode ? key.charCode : key.keyCode;
 
     if(key == 65){// A
@@ -280,7 +278,7 @@ window.onkeydown = function(e){
 };
 
 window.onkeyup = function(e){
-    key = window.event ? event : e;
+    var key = window.event ? event : e;
     key = key.charCode ? key.charCode : key.keyCode;
 
     if(key == 65){// A
