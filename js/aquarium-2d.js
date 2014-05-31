@@ -50,8 +50,8 @@ function draw(){
       height
     );
 
-    i = fish.length - 1;
-    if(i >= 0){
+    var loop_counter = fish.length - 1;
+    if(loop_counter >= 0){
         // set position now to simplify fish placement math
         buffer.translate(
           x - camera_x,
@@ -60,51 +60,59 @@ function draw(){
 
         do{
             // fish move in the direction they are facing
-            fish[i][0] -= fish[i][2];
+            fish[loop_counter][0] -= fish[loop_counter][2];
 
             // if a fish travels past the edge of the screen, swap it to the other edge
-            if(fish[i][0] > camera_x + x + fish[i][4] * 4 || fish[i][0] < camera_x - x - fish[i][4] * 4){
-                fish[i][0] = camera_x + (fish[i][0] > camera_x + x ? -x - fish[i][4] * 4 : x + fish[i][4] * 4);
+            if(fish[loop_counter][0] > camera_x + x + fish[loop_counter][4] * 4
+              || fish[loop_counter][0] < camera_x - x - fish[loop_counter][4] * 4){
+                fish[loop_counter][0] =
+                  camera_x
+                  + (fish[loop_counter][0] > camera_x + x
+                    ? -x - fish[loop_counteri][4] * 4
+                    : x + fish[loop_counter][4] * 4
+                  );
 
                 // replace fish
                 fish.splice(
-                  i,
+                  loop_counter,
                   1
                 );
                 create_fish();
 
             }else{
                 // determine movement direction based on speed
-                var dir = fish[i][2] > 0 ? 1 : -1;
+                var direction = fish[loop_counter][2] > 0
+                  ? 1
+                  : -1;
 
                 // draw fish
                 buffer.beginPath();
                 buffer.moveTo(
-                  fish[i][0],
-                  fish[i][1] + fish[i][4] / 2
+                  fish[loop_counter][0],
+                  fish[loop_counter][1] + fish[loop_counter][4] / 2
                 );
                 buffer.lineTo(
-                  fish[i][0] + fish[i][4] * dir,
-                  fish[i][1]
+                  fish[loop_counter][0] + fish[loop_counter][4] * direction,
+                  fish[loop_counter][1]
                 );
                 buffer.lineTo(
-                  fish[i][0] + fish[i][4] * 3 * dir,
-                  fish[i][1] + fish[i][4]
+                  fish[loop_counter][0] + fish[loop_counter][4] * 3 * direction,
+                  fish[loop_counter][1] + fish[loop_counter][4]
                 );
                 buffer.lineTo(
-                  fish[i][0] + fish[i][4] * 3 * dir,
-                  fish[i][1]
+                  fish[loop_counter][0] + fish[loop_counter][4] * 3 * direction,
+                  fish[loop_counter][1]
                 );
                 buffer.lineTo(
-                  fish[i][0] + fish[i][4] * dir,
-                  fish[i][1] + fish[i][4]
+                  fish[loop_counter][0] + fish[loop_counter][4] * direction,
+                  fish[loop_counter][1] + fish[loop_counter][4]
                 );
                 buffer.closePath();
 
-                buffer.fillStyle = fish[i][3];
+                buffer.fillStyle = fish[loop_counter][3];
                 buffer.fill();
             }
-        }while(i--);
+        }while(loop_counter--);
 
         // reset fish placement
         buffer.translate(
@@ -117,19 +125,19 @@ function draw(){
     buffer.fillStyle = '#444';
     buffer.strokeStyle = '#000';
     buffer.lineWidth = 2;
-    i = 1;
+    loop_counter = 1;
     do{
         buffer.beginPath();
         buffer.rect(
           0,
-          50 * i,
+          50 * loop_counter,
           50,
           50
         );
         buffer.closePath();
         buffer.fill();
         buffer.stroke();
-    }while(i--);
+    }while(loop_counter--);
 
     // draw create fish button +
     buffer.fillStyle = '#fff';
@@ -222,7 +230,6 @@ var camera_y = 0;
 var canvas = document.getElementById('canvas').getContext('2d');
 var fish = [];
 var height = 0;
-var i = 9;
 var key_down = 0;
 var key_left = 0;
 var key_right = 0;
@@ -235,9 +242,10 @@ var y = 0;
 resize();
 
 // create 10 randomly placed fish
+var loop_counter = 9;
 do{
     create_fish();
-}while(i--);
+}while(loop_counter--);
 
 setInterval(
   'draw()',
