@@ -5,15 +5,15 @@ function create_fish(){
     var fish_size = 0;
     // 60% chance to be normal sized fish
     if(fish_class < .6){
-        fish_size = random_number(25) + 25;
+        fish_size = Math.floor(Math.random() * 25) + 25;
 
     // 70% chance to be a small fish, if not a normal sized fish
     }else if(fish_class < .88){
-        fish_size = random_number(10) + 5;
+        fish_size = Math.floor(Math.random() * 10) + 5;
 
     // else is a giant fish
     }else{
-        fish_size = random_number(500) + 50;
+        fish_size = Math.floor(Math.random() * 500) + 50;
     }
 
     var fish_speed = Math.random() * 10 - 5;
@@ -22,7 +22,7 @@ function create_fish(){
       fish_speed < 0// x
         ? camera_x - x - fish_size
         : camera_x + x + fish_size,
-      camera_y + random_number(height) - y,// y
+      camera_y + Math.floor(Math.random() * height) - y,// y
       fish_speed,
       '#' + hex() + hex() + hex(),// color
       fish_size
@@ -68,7 +68,7 @@ function draw(){
                 fish[loop_counter][0] =
                   camera_x
                   + (fish[loop_counter][0] > camera_x + x
-                    ? -x - fish[loop_counteri][4] * 4
+                    ? -x - fish[loop_counter][4] * 4
                     : x + fish[loop_counter][4] * 4
                   );
 
@@ -205,11 +205,7 @@ function draw(){
 }
 
 function hex(){
-    return '0123456789abcdef'.charAt(random_number(16));
-}
-
-function random_number(i){
-    return Math.floor(Math.random() * i);
+    return '0123456789abcdef'.charAt(Math.floor(Math.random() * 16));
 }
 
 function resize(){
