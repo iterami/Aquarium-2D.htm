@@ -25,7 +25,7 @@ function create_fish(){
       camera_y + Math.floor(Math.random() * height) - y,// y
       fish_speed,
       '#' + hex() + hex() + hex(),// color
-      fish_size
+      fish_size,
     ]);
 }
 
@@ -208,6 +208,21 @@ function hex(){
     return '0123456789abcdef'.charAt(Math.floor(Math.random() * 16));
 }
 
+function init(){
+    resize();
+
+    // create 10 randomly placed fish
+    var loop_counter = 9;
+    do{
+        create_fish();
+    }while(loop_counter--);
+
+    setInterval(
+      'draw()',
+      30
+    );
+}
+
 function resize(){
     height = window.innerHeight;
     document.getElementById('buffer').height = height;
@@ -234,21 +249,6 @@ var key_up = 0;
 var width = 0;
 var x = 0;
 var y = 0;
-
-resize();
-
-// create 10 randomly placed fish
-var loop_counter = 9;
-do{
-    create_fish();
-}while(loop_counter--);
-
-setInterval(
-  'draw()',
-  30
-);
-
-window.onresize = resize;
 
 window.onkeydown = function(e){
     var key = window.event ? event : e;
@@ -302,6 +302,8 @@ window.onkeyup = function(e){
     }
 };
 
+window.onload = init;
+
 window.onmousedown = function(e){
     e.preventDefault();
 
@@ -317,3 +319,5 @@ window.onmousedown = function(e){
         }
     }
 };
+
+window.onresize = resize;
