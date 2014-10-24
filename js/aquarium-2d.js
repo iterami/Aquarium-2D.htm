@@ -1,17 +1,17 @@
 function create_fish(){
-    // determine fish class
+    // Determine fish class.
     var fish_class = Math.random();
 
     var fish_size = 0;
-    // 60% chance to be normal sized fish
+    // 60% chance to be normal sized fish.
     if(fish_class < .6){
         fish_size = Math.floor(Math.random() * 25) + 25;
 
-    // 70% chance to be a small fish, if not a normal sized fish
+    // 70% chance to be a small fish, if not a normal sized fish.
     }else if(fish_class < .88){
         fish_size = Math.floor(Math.random() * 10) + 5;
 
-    // else is a giant fish
+    // Else is a giant fish.
     }else{
         fish_size = Math.floor(Math.random() * 500) + 50;
     }
@@ -19,12 +19,12 @@ function create_fish(){
     var fish_speed = Math.random() * 10 - 5;
 
     fish.push([
-      fish_speed < 0// x
+      fish_speed < 0
         ? camera_x - x - fish_size
-        : camera_x + x + fish_size,
-      camera_y + Math.floor(Math.random() * height) - y,// y
+        : camera_x + x + fish_size,// X
+      camera_y + Math.floor(Math.random() * height) - y,// Y
       fish_speed,
-      '#' + hex() + hex() + hex(),// color
+      '#' + hex() + hex() + hex(),// Color
       fish_size,
     ]);
 }
@@ -52,17 +52,17 @@ function draw(){
 
     var loop_counter = fish.length - 1;
     if(loop_counter >= 0){
-        // set position now to simplify fish placement math
+        // Set position now to simplify fish placement math.
         buffer.translate(
           x - camera_x,
           y - camera_y
         );
 
         do{
-            // fish move in the direction they are facing
+            // Fish move in the direction they are facing.
             fish[loop_counter][0] -= fish[loop_counter][2];
 
-            // if a fish travels past the edge of the screen, swap it to the other edge
+            // If a fish travels past the edge of the screen, swap it to the other edge.
             if(fish[loop_counter][0] > camera_x + x + fish[loop_counter][4] * 4
               || fish[loop_counter][0] < camera_x - x - fish[loop_counter][4] * 4){
                 fish[loop_counter][0] =
@@ -72,7 +72,7 @@ function draw(){
                     : x + fish[loop_counter][4] * 4
                   );
 
-                // replace fish
+                // Replace fish.
                 fish.splice(
                   loop_counter,
                   1
@@ -80,12 +80,12 @@ function draw(){
                 create_fish();
 
             }else{
-                // determine movement direction based on speed
+                // Determine movement direction based on speed.
                 var direction = fish[loop_counter][2] > 0
                   ? 1
                   : -1;
 
-                // draw fish
+                // Draw fish.
                 buffer.beginPath();
                 buffer.moveTo(
                   fish[loop_counter][0],
@@ -114,14 +114,14 @@ function draw(){
             }
         }while(loop_counter--);
 
-        // reset fish placement
+        // Reset fish placement.
         buffer.translate(
           camera_x - x,
           camera_y - y
         );
     }
 
-    // draw toolbar buttons
+    // Draw toolbar buttons.
     buffer.fillStyle = '#444';
     buffer.strokeStyle = '#000';
     buffer.lineWidth = 2;
@@ -139,7 +139,7 @@ function draw(){
         buffer.stroke();
     }while(loop_counter--);
 
-    // draw create fish button +
+    // Draw create fish button +.
     buffer.fillStyle = '#fff';
     buffer.fillRect(
       10,
@@ -154,7 +154,7 @@ function draw(){
       30
     );
 
-    // draw current camera position
+    // Draw current camera position.
     buffer.font = '23pt sans-serif';
     buffer.fillText(
       camera_x + 'x ' + camera_y + 'y',
@@ -167,7 +167,7 @@ function draw(){
       height - 40
     );
 
-    // draw clear button X
+    // Draw clear button X.
     buffer.beginPath();
     buffer.moveTo(
       10,
@@ -211,7 +211,7 @@ function hex(){
 function init(){
     resize();
 
-    // create 10 randomly placed fish
+    // Create 10 randomly placed fish.
     var loop_counter = 9;
     do{
         create_fish();
@@ -254,29 +254,37 @@ window.onkeydown = function(e){
     var key = window.event ? event : e;
     key = key.charCode ? key.charCode : key.keyCode;
 
-    if(key == 65){// A
+    // A: move left.
+    if(key == 65){
         key_left = 1;
 
-    }else if(key == 68){// D
+    // D: move right.
+    }else if(key == 68){
         key_right = 1;
 
-    }else if(key == 83){// S
+    // S: move down.
+    }else if(key == 83){
         key_down = 1;
 
-    }else if(key == 87){// W
+    // W: move up.
+    }else if(key == 87){
         key_up = 1;
 
-    }else if(key == 16){// shift
+    // Shift: move faster.
+    }else if(key == 16){
         key_sprint = 2;
 
-    }else if(key == 72){// H
+    // H: reset camera position.
+    }else if(key == 72){
         camera_x = 0;
         camera_y = 0;
 
-    }else if(key == 70){// F
+    // F: create new fish.
+    }else if(key == 70){
         create_fish();
 
-    }else if(key == 67){// C
+    // C: clear all fish.
+    }else if(key == 67){
         fish.length = 0;
     }
 };
@@ -307,16 +315,18 @@ window.onload = init;
 window.onmousedown = function(e){
     e.preventDefault();
 
-    // check if clicked on a UI button
-    if(e.pageX < 50){
-        // create fish button
-        if(e.pageY < 50){
-            create_fish();
+    // Check if clicked on a UI button.
+    if(e.pageX >= 50){
+        return;
+    }
 
-        // clear all fish button
-        }else if(e.pageY < 100){
-            fish.length = 0;
-        }
+    // Create fish button.
+    if(e.pageY < 50){
+        create_fish();
+
+    // Clear all fish button.
+    }else if(e.pageY < 100){
+        fish.length = 0;
     }
 };
 
