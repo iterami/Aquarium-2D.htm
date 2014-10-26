@@ -24,7 +24,7 @@ function create_fish(){
         : camera_x + x + fish_size,// X
       camera_y + Math.floor(Math.random() * height) - y,// Y
       fish_speed,
-      '#' + hex() + hex() + hex(),// Color
+      random_hex(),// Color
       fish_size,
     ]);
 }
@@ -204,10 +204,6 @@ function draw(){
     );
 }
 
-function hex(){
-    return '0123456789abcdef'.charAt(Math.floor(Math.random() * 16));
-}
-
 function init(){
     resize();
 
@@ -221,6 +217,14 @@ function init(){
       'draw()',
       30
     );
+}
+
+function random_hex(){
+    var choices = '0123456789abcdef';
+    return '#'
+      + choices.charAt(Math.floor(Math.random() * 16))
+      + choices.charAt(Math.floor(Math.random() * 16))
+      + choices.charAt(Math.floor(Math.random() * 16));
 }
 
 function resize(){
