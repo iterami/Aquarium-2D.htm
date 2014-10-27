@@ -52,6 +52,9 @@ function draw(){
 
     var loop_counter = fish.length - 1;
     if(loop_counter >= 0){
+        // Save the current buffer state.
+        buffer.save();
+
         // Set position now to simplify fish placement math.
         buffer.translate(
           x - camera_x,
@@ -114,11 +117,8 @@ function draw(){
             }
         }while(loop_counter--);
 
-        // Reset fish placement.
-        buffer.translate(
-          camera_x - x,
-          camera_y - y
-        );
+        // Restore the buffer state.
+        buffer.restore();
     }
 
     // Draw toolbar buttons.
