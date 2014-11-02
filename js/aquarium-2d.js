@@ -32,9 +32,17 @@ function create_fish(){
 function draw(){
     if(key_left){
         camera_x -= 5 * key_sprint;
+        pillar += 5 * key_sprint;
+        if(pillar > width){
+            pillar -= width + 100;
+        }
     }
     if(key_right){
         camera_x += 5 * key_sprint;
+        pillar -= 5 * key_sprint;
+        if (pillar < -100){
+            pillar += width + 100;
+        }
     }
     if(key_down){
         camera_y += 5 * key_sprint;
@@ -50,17 +58,25 @@ function draw(){
       height
     );
 
+    buffer.fillStyle = '#003';
+    buffer.fillRect(
+        pillar,
+        0,
+        100,
+        height
+    );
+
+    // Save the current buffer state.
+    buffer.save();
+
+    // Draw stuff relative to center of canvas.
+    buffer.translate(
+      x - camera_x,
+      y - camera_y
+    );
+
     var loop_counter = fish.length - 1;
     if(loop_counter >= 0){
-        // Save the current buffer state.
-        buffer.save();
-
-        // Set position now to simplify fish placement math.
-        buffer.translate(
-          x - camera_x,
-          y - camera_y
-        );
-
         do{
             // Fish move in the direction they are facing.
             fish[loop_counter][0] -= fish[loop_counter][2];
@@ -116,10 +132,10 @@ function draw(){
                 buffer.fill();
             }
         }while(loop_counter--);
-
-        // Restore the buffer state.
-        buffer.restore();
     }
+
+    // Restore the buffer state.
+    buffer.restore();
 
     // Draw toolbar buttons.
     buffer.fillStyle = '#444';
@@ -207,6 +223,9 @@ function draw(){
 function init(){
     resize();
 
+    // Randomize pillar X.
+    pillar = Math.floor(Math.random() * width);
+
     // Create 10 randomly placed fish.
     var loop_counter = 9;
     do{
@@ -250,6 +269,7 @@ var key_left = 0;
 var key_right = 0;
 var key_sprint = 1;
 var key_up = 0;
+var pillar = 0;
 var width = 0;
 var x = 0;
 var y = 0;
