@@ -31,24 +31,24 @@ function create_fish(){
 
 function draw(){
     if(key_left){
-        camera_x -= 5 * key_sprint;
-        pillar += 5 * key_sprint;
+        camera_x -= 5 * sprint_modifier;
+        pillar += 5 * sprint_modifier;
         if(pillar > width){
             pillar -= width + 100;
         }
     }
     if(key_right){
-        camera_x += 5 * key_sprint;
-        pillar -= 5 * key_sprint;
+        camera_x += 5 * sprint_modifier;
+        pillar -= 5 * sprint_modifier;
         if (pillar < -100){
             pillar += width + 100;
         }
     }
     if(key_down){
-        camera_y += 5 * key_sprint;
+        camera_y += 5 * sprint_modifier;
     }
     if(key_up){
-        camera_y -= 5 * key_sprint;
+        camera_y -= 5 * sprint_modifier;
     }
 
     buffer.clearRect(
@@ -264,12 +264,12 @@ var camera_y = 0;
 var canvas = document.getElementById('canvas').getContext('2d');
 var fish = [];
 var height = 0;
-var key_down = 0;
-var key_left = 0;
-var key_right = 0;
-var key_sprint = 1;
-var key_up = 0;
+var key_down = false;
+var key_left = false;
+var key_right = false;
+var key_up = false;
 var pillar = 0;
+var sprint_modifier = 1;
 var width = 0;
 var x = 0;
 var y = 0;
@@ -280,23 +280,23 @@ window.onkeydown = function(e){
 
     // A: move left.
     if(key == 65){
-        key_left = 1;
+        key_left = true;
 
     // D: move right.
     }else if(key == 68){
-        key_right = 1;
+        key_right = true;
 
     // S: move down.
     }else if(key == 83){
-        key_down = 1;
+        key_down = true;
 
     // W: move up.
     }else if(key == 87){
-        key_up = 1;
+        key_up = true;
 
     // Shift: move faster.
     }else if(key == 16){
-        key_sprint = 2;
+        sprint_modifier = 2;
 
     // H: reset camera position.
     }else if(key == 72){
@@ -318,19 +318,19 @@ window.onkeyup = function(e){
     key = key.charCode ? key.charCode : key.keyCode;
 
     if(key == 65){// A
-        key_left = 0;
+        key_left = false;
 
     }else if(key == 68){// D
-        key_right = 0;
+        key_right = false;
 
     }else if(key == 83){// S
-        key_down = 0;
+        key_down = false;
 
     }else if(key == 87){// W
-        key_up = 0;
+        key_up = false;
 
     }else if(key == 16){// shift
-        key_sprint = 1;
+        sprint_modifier = 1;
     }
 };
 
