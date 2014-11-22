@@ -275,8 +275,7 @@ var x = 0;
 var y = 0;
 
 window.onkeydown = function(e){
-    var key = window.event ? event : e;
-    key = key.charCode ? key.charCode : key.keyCode;
+    var key = e.keyCode || e.which;
 
     // A: move left.
     if(key == 65){
@@ -314,8 +313,7 @@ window.onkeydown = function(e){
 };
 
 window.onkeyup = function(e){
-    var key = window.event ? event : e;
-    key = key.charCode ? key.charCode : key.keyCode;
+    var key = e.keyCode || e.which;
 
     if(key == 65){// A
         key_left = false;
