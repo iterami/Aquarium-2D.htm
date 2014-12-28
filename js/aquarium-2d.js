@@ -30,27 +30,6 @@ function create_fish(){
 }
 
 function draw(){
-    if(key_left){
-        camera_x -= 5 * sprint_modifier;
-        pillar += 5 * sprint_modifier;
-        if(pillar > width){
-            pillar -= width + 100;
-        }
-    }
-    if(key_right){
-        camera_x += 5 * sprint_modifier;
-        pillar -= 5 * sprint_modifier;
-        if (pillar < -100){
-            pillar += width + 100;
-        }
-    }
-    if(key_down){
-        camera_y += 5 * sprint_modifier;
-    }
-    if(key_up){
-        camera_y -= 5 * sprint_modifier;
-    }
-
     buffer.clearRect(
       0,
       0,
@@ -78,59 +57,37 @@ function draw(){
     var loop_counter = fish.length - 1;
     if(loop_counter >= 0){
         do{
-            // Fish move in the direction they are facing.
-            fish[loop_counter][0] -= fish[loop_counter][2];
+            // Determine movement direction based on speed.
+            var direction = fish[loop_counter][2] > 0
+              ? 1
+              : -1;
 
-            // If a fish travels past the edge of the screen, swap it to the other edge.
-            if(fish[loop_counter][0] > camera_x + x + fish[loop_counter][4] * 4
-              || fish[loop_counter][0] < camera_x - x - fish[loop_counter][4] * 4){
-                fish[loop_counter][0] =
-                  camera_x
-                  + (fish[loop_counter][0] > camera_x + x
-                    ? -x - fish[loop_counter][4] * 4
-                    : x + fish[loop_counter][4] * 4
-                  );
+            // Draw fish.
+            buffer.beginPath();
+            buffer.moveTo(
+              fish[loop_counter][0],
+              fish[loop_counter][1] + fish[loop_counter][4] / 2
+            );
+            buffer.lineTo(
+              fish[loop_counter][0] + fish[loop_counter][4] * direction,
+              fish[loop_counter][1]
+            );
+            buffer.lineTo(
+              fish[loop_counter][0] + fish[loop_counter][4] * 3 * direction,
+              fish[loop_counter][1] + fish[loop_counter][4]
+            );
+            buffer.lineTo(
+              fish[loop_counter][0] + fish[loop_counter][4] * 3 * direction,
+              fish[loop_counter][1]
+            );
+            buffer.lineTo(
+              fish[loop_counter][0] + fish[loop_counter][4] * direction,
+              fish[loop_counter][1] + fish[loop_counter][4]
+            );
+            buffer.closePath();
 
-                // Replace fish.
-                fish.splice(
-                  loop_counter,
-                  1
-                );
-                create_fish();
-
-            }else{
-                // Determine movement direction based on speed.
-                var direction = fish[loop_counter][2] > 0
-                  ? 1
-                  : -1;
-
-                // Draw fish.
-                buffer.beginPath();
-                buffer.moveTo(
-                  fish[loop_counter][0],
-                  fish[loop_counter][1] + fish[loop_counter][4] / 2
-                );
-                buffer.lineTo(
-                  fish[loop_counter][0] + fish[loop_counter][4] * direction,
-                  fish[loop_counter][1]
-                );
-                buffer.lineTo(
-                  fish[loop_counter][0] + fish[loop_counter][4] * 3 * direction,
-                  fish[loop_counter][1] + fish[loop_counter][4]
-                );
-                buffer.lineTo(
-                  fish[loop_counter][0] + fish[loop_counter][4] * 3 * direction,
-                  fish[loop_counter][1]
-                );
-                buffer.lineTo(
-                  fish[loop_counter][0] + fish[loop_counter][4] * direction,
-                  fish[loop_counter][1] + fish[loop_counter][4]
-                );
-                buffer.closePath();
-
-                buffer.fillStyle = fish[loop_counter][3];
-                buffer.fill();
-            }
+            buffer.fillStyle = fish[loop_counter][3];
+            buffer.fill();
         }while(loop_counter--);
     }
 
@@ -206,7 +163,6 @@ function draw(){
     buffer.lineWidth = 5;
     buffer.stroke();
 
-
     canvas.clearRect(
       0,
       0,
@@ -218,6 +174,8 @@ function draw(){
       0,
       0
     );
+
+    window.requestAnimationFrame(draw);
 }
 
 function init(){
@@ -232,10 +190,60 @@ function init(){
         create_fish();
     }while(loop_counter--);
 
+    window.requestAnimationFrame(draw);
     setInterval(
-      'draw()',
+      'logic()',
       30
     );
+}
+
+function logic(){
+    if(key_left){
+        camera_x -= 5 * sprint_modifier;
+        pillar += 5 * sprint_modifier;
+        if(pillar > width){
+            pillar -= width + 100;
+        }
+    }
+    if(key_right){
+        camera_x += 5 * sprint_modifier;
+        pillar -= 5 * sprint_modifier;
+        if (pillar < -100){
+            pillar += width + 100;
+        }
+    }
+    if(key_down){
+        camera_y += 5 * sprint_modifier;
+    }
+    if(key_up){
+        camera_y -= 5 * sprint_modifier;
+    }
+
+    var loop_counter = fish.length - 1;
+    if(loop_counter >= 0){
+        do{
+            // Fish move in the direction they are facing.
+            fish[loop_counter][0] -= fish[loop_counter][2];
+
+            // If a fish travels past the edge of the screen, swap it to the other edge.
+            if(fish[loop_counter][0] > camera_x + x + fish[loop_counter][4] * 4
+              || fish[loop_counter][0] < camera_x - x - fish[loop_counter][4] * 4){
+                fish[loop_counter][0] =
+                  camera_x
+                  + (fish[loop_counter][0] > camera_x + x
+                    ? -x - fish[loop_counter][4] * 4
+                    : x + fish[loop_counter][4] * 4
+                  );
+
+                // Replace fish.
+                fish.splice(
+                  loop_counter,
+                  1
+                );
+                create_fish();
+            }
+        }while(loop_counter--);
+    }
 }
 
 function random_hex(){
