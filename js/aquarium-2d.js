@@ -182,7 +182,7 @@ function init(){
     resize();
 
     // Randomize pillar X.
-    pillar = Math.floor(Math.random() * width);
+    move_pillar(Math.floor(Math.random() * width));
 
     // Create 10 randomly placed fish.
     var loop_counter = 9;
@@ -200,17 +200,11 @@ function init(){
 function logic(){
     if(key_left){
         camera_x -= 5 * sprint_modifier;
-        pillar += 5 * sprint_modifier;
-        if(pillar > width){
-            pillar -= width + 100;
-        }
+        move_pillar(5);
     }
     if(key_right){
         camera_x += 5 * sprint_modifier;
-        pillar -= 5 * sprint_modifier;
-        if(pillar < -100){
-            pillar += width + 100;
-        }
+        move_pillar(-5);
     }
     if(key_down){
         camera_y += 5 * sprint_modifier;
@@ -243,6 +237,17 @@ function logic(){
                 create_fish();
             }
         }while(loop_counter--);
+    }
+}
+
+function move_pillar(amount){
+    pillar += amount * sprint_modifier;
+
+    if(pillar > width){
+        pillar -= width + 100;
+    }
+    if(pillar < -100){
+        pillar += width + 100;
     }
 }
 
@@ -307,7 +312,7 @@ window.onkeydown = function(e){
 
     // H: reset camera position.
     }else if(key == 72){
-        pillar += camera_x;
+        move_pillar(camera_x);
         camera_x = 0;
         camera_y = 0;
 
