@@ -245,8 +245,8 @@ function move_pillar(amount){
 
     if(pillar > width){
         pillar -= width + 100;
-    }
-    if(pillar < -100){
+
+    }else if(pillar < -100){
         pillar += width + 100;
     }
 }
