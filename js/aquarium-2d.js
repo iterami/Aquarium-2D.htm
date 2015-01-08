@@ -208,7 +208,7 @@ function logic(){
     if(key_right){
         camera_x += 5 * sprint_modifier;
         pillar -= 5 * sprint_modifier;
-        if (pillar < -100){
+        if(pillar < -100){
             pillar += width + 100;
         }
     }
@@ -307,6 +307,7 @@ window.onkeydown = function(e){
 
     // H: reset camera position.
     }else if(key == 72){
+        pillar += camera_x;
         camera_x = 0;
         camera_y = 0;
 
