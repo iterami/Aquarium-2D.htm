@@ -178,25 +178,6 @@ function draw(){
     window.requestAnimationFrame(draw);
 }
 
-function init(){
-    resize();
-
-    // Randomize pillar X.
-    move_pillar(Math.floor(Math.random() * width));
-
-    // Create 10 randomly placed fish.
-    var loop_counter = 9;
-    do{
-        create_fish();
-    }while(loop_counter--);
-
-    window.requestAnimationFrame(draw);
-    setInterval(
-      'logic()',
-      30
-    );
-}
-
 function logic(){
     if(key_left){
         camera_x -= 5 * sprint_modifier;
@@ -346,7 +327,24 @@ window.onkeyup = function(e){
     }
 };
 
-window.onload = init;
+window.onload = function(){
+    resize();
+
+    // Randomize pillar X.
+    move_pillar(Math.floor(Math.random() * width));
+
+    // Create 10 randomly placed fish.
+    var loop_counter = 9;
+    do{
+        create_fish();
+    }while(loop_counter--);
+
+    window.requestAnimationFrame(draw);
+    setInterval(
+      'logic()',
+      30
+    );
+};
 
 window.onmousedown = function(e){
     e.preventDefault();
