@@ -340,7 +340,7 @@ window.onload = function(){
     }while(loop_counter--);
 
     window.requestAnimationFrame(draw);
-    setInterval(
+    window.setInterval(
       'logic()',
       30
     );
