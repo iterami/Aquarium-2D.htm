@@ -54,41 +54,38 @@ function draw(){
       y - camera_y
     );
 
-    var loop_counter = fish.length - 1;
-    if(loop_counter >= 0){
-        do{
-            // Determine movement direction based on speed.
-            var direction = fish[loop_counter][2] > 0
-              ? 1
-              : -1;
+    for(var id in fish){
+        // Determine movement direction based on speed.
+        var direction = fish[id][2] > 0
+          ? 1
+          : -1;
 
-            // Draw fish.
-            buffer.beginPath();
-            buffer.moveTo(
-              fish[loop_counter][0],
-              fish[loop_counter][1] + fish[loop_counter][4] / 2
-            );
-            buffer.lineTo(
-              fish[loop_counter][0] + fish[loop_counter][4] * direction,
-              fish[loop_counter][1]
-            );
-            buffer.lineTo(
-              fish[loop_counter][0] + fish[loop_counter][4] * 3 * direction,
-              fish[loop_counter][1] + fish[loop_counter][4]
-            );
-            buffer.lineTo(
-              fish[loop_counter][0] + fish[loop_counter][4] * 3 * direction,
-              fish[loop_counter][1]
-            );
-            buffer.lineTo(
-              fish[loop_counter][0] + fish[loop_counter][4] * direction,
-              fish[loop_counter][1] + fish[loop_counter][4]
-            );
-            buffer.closePath();
+        // Draw fish.
+        buffer.beginPath();
+        buffer.moveTo(
+          fish[id][0],
+          fish[id][1] + fish[id][4] / 2
+        );
+        buffer.lineTo(
+          fish[id][0] + fish[id][4] * direction,
+          fish[id][1]
+        );
+        buffer.lineTo(
+          fish[id][0] + fish[id][4] * 3 * direction,
+          fish[id][1] + fish[id][4]
+        );
+        buffer.lineTo(
+          fish[id][0] + fish[id][4] * 3 * direction,
+          fish[id][1]
+        );
+        buffer.lineTo(
+          fish[id][0] + fish[id][4] * direction,
+          fish[id][1] + fish[id][4]
+        );
+        buffer.closePath();
 
-            buffer.fillStyle = fish[loop_counter][3];
-            buffer.fill();
-        }while(loop_counter--);
+        buffer.fillStyle = fish[id][3];
+        buffer.fill();
     }
 
     // Restore the buffer state.
@@ -98,7 +95,7 @@ function draw(){
     buffer.fillStyle = '#444';
     buffer.strokeStyle = '#000';
     buffer.lineWidth = 2;
-    loop_counter = 1;
+    var loop_counter = 1;
     do{
         buffer.beginPath();
         buffer.rect(
@@ -194,30 +191,27 @@ function logic(){
         camera_y -= 5 * sprint_modifier;
     }
 
-    var loop_counter = fish.length - 1;
-    if(loop_counter >= 0){
-        do{
-            // Fish move in the direction they are facing.
-            fish[loop_counter][0] -= fish[loop_counter][2];
+    for(var id in fish){
+        // Fish move in the direction they are facing.
+        fish[id][0] -= fish[id][2];
 
-            // If a fish travels past the edge of the screen, swap it to the other edge.
-            if(fish[loop_counter][0] > camera_x + x + fish[loop_counter][4] * 4
-              || fish[loop_counter][0] < camera_x - x - fish[loop_counter][4] * 4){
-                fish[loop_counter][0] =
-                  camera_x
-                  + (fish[loop_counter][0] > camera_x + x
-                    ? -x - fish[loop_counter][4] * 4
-                    : x + fish[loop_counter][4] * 4
-                  );
+        // If a fish travels past the edge of the screen, swap it to the other edge.
+        if(fish[id][0] > camera_x + x + fish[id][4] * 4
+          || fish[id][0] < camera_x - x - fish[id][4] * 4){
+            fish[id][0] =
+              camera_x
+              + (fish[id][0] > camera_x + x
+                ? -x - fish[id][4] * 4
+                : x + fish[id][4] * 4
+              );
 
-                // Replace fish.
-                fish.splice(
-                  loop_counter,
-                  1
-                );
-                create_fish();
-            }
-        }while(loop_counter--);
+            // Replace fish.
+            fish.splice(
+              id,
+              1
+            );
+            create_fish();
+        }
     }
 }
 
