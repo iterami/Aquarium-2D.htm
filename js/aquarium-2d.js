@@ -206,10 +206,7 @@ function logic(){
               );
 
             // Replace fish.
-            fish.splice(
-              id,
-              1
-            );
+            delete fish[id];
             create_fish();
         }
     }
