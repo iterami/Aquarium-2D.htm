@@ -3,15 +3,15 @@ function create_fish(){
     var fish_class = Math.random();
 
     var fish_size = 0;
-    // 60% chance to be normal sized fish.
+    // 60% chance to be normal sized fish...
     if(fish_class < .6){
         fish_size = Math.floor(Math.random() * 25) + 25;
 
-    // 70% chance to be a small fish, if not a normal sized fish.
+    // 88% chance to be a small fish...
     }else if(fish_class < .88){
         fish_size = Math.floor(Math.random() * 10) + 5;
 
-    // Else is a giant fish.
+    // ...else is a giant fish.
     }else{
         fish_size = Math.floor(Math.random() * 500) + 50;
     }
