@@ -18,15 +18,15 @@ function create_fish(){
 
     var fish_speed = Math.random() * 10 - 5;
 
-    fish.push([
-      fish_speed < 0
+    fish.push({
+      'color': random_hex(),
+      'size': fish_size,
+      'speed': fish_speed,
+      'x': fish_speed < 0
         ? camera_x - x - fish_size
-        : camera_x + x + fish_size,// X
-      camera_y + Math.floor(Math.random() * height) - y,// Y
-      fish_speed,
-      random_hex(),// Color
-      fish_size,
-    ]);
+        : camera_x + x + fish_size,
+      'y': camera_y + Math.floor(Math.random() * height) - y,
+    });
 }
 
 function draw(){
@@ -56,35 +56,35 @@ function draw(){
 
     for(var id in fish){
         // Determine movement direction based on speed.
-        var direction = fish[id][2] > 0
+        var direction = fish[id]['speed'] > 0
           ? 1
           : -1;
 
         // Draw fish.
         buffer.beginPath();
         buffer.moveTo(
-          fish[id][0],
-          fish[id][1] + fish[id][4] / 2
+          fish[id]['x'],
+          fish[id]['y'] + fish[id]['size'] / 2
         );
         buffer.lineTo(
-          fish[id][0] + fish[id][4] * direction,
-          fish[id][1]
+          fish[id]['x'] + fish[id]['size'] * direction,
+          fish[id]['y']
         );
         buffer.lineTo(
-          fish[id][0] + fish[id][4] * 3 * direction,
-          fish[id][1] + fish[id][4]
+          fish[id]['x'] + fish[id]['size'] * 3 * direction,
+          fish[id]['y'] + fish[id]['size']
         );
         buffer.lineTo(
-          fish[id][0] + fish[id][4] * 3 * direction,
-          fish[id][1]
+          fish[id]['x'] + fish[id]['size'] * 3 * direction,
+          fish[id]['y']
         );
         buffer.lineTo(
-          fish[id][0] + fish[id][4] * direction,
-          fish[id][1] + fish[id][4]
+          fish[id]['x'] + fish[id]['size'] * direction,
+          fish[id]['y'] + fish[id]['size']
         );
         buffer.closePath();
 
-        buffer.fillStyle = fish[id][3];
+        buffer.fillStyle = fish[id]['color'];
         buffer.fill();
     }
 
@@ -193,20 +193,16 @@ function logic(){
 
     for(var id in fish){
         // Fish move in the direction they are facing.
-        fish[id][0] -= fish[id][2];
+        fish[id]['x'] -= fish[id]['speed'];
 
-        // If a fish travels past the edge of the screen, swap it to the other edge.
-        if(fish[id][0] > camera_x + x + fish[id][4] * 4
-          || fish[id][0] < camera_x - x - fish[id][4] * 4){
-            fish[id][0] =
-              camera_x
-              + (fish[id][0] > camera_x + x
-                ? -x - fish[id][4] * 4
-                : x + fish[id][4] * 4
-              );
-
-            // Replace fish.
-            delete fish[id];
+        // If a fish travels past the edge of the screen,
+        //   replace it with a new fish.
+        if(fish[id]['x'] > camera_x + x + fish[id]['size'] * 4
+          || fish[id]['x'] < camera_x - x - fish[id]['size'] * 4){
+            fish.splice(
+              id,
+              1
+            );
             create_fish();
         }
     }
