@@ -219,11 +219,11 @@ window.onkeydown = function(e){
     }else if(key == 87){
         key_up = true;
 
-    // Shift: move faster.
+    // Shift: decrease camera speed.
     }else if(key == 16){
         sprint_modifier = 2;
 
-    // Shift: decrease camera speed.
+    // H: reset camera position.
     }else if(key == 72){
         move_pillar(camera_x);
         camera_x = 0;
