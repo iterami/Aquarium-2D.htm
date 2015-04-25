@@ -7,7 +7,7 @@ Aquarium-2D.htm
 
 Action       | Key
 -------------|-----------
-Clear Fish   | C
+Clear Fish   | ESC
 Create Fish  | F
 Move Camera  | WASD
 Move Faster  | Hold Shift

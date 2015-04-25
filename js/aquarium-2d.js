@@ -39,10 +39,10 @@ function draw(){
 
     buffer.fillStyle = '#003';
     buffer.fillRect(
-        pillar,
-        0,
-        100,
-        height
+      pillar,
+      0,
+      100,
+      height
     );
 
     // Save the current buffer state.
@@ -91,74 +91,19 @@ function draw(){
     // Restore the buffer state.
     buffer.restore();
 
-    // Draw toolbar buttons.
-    buffer.fillStyle = '#444';
-    buffer.strokeStyle = '#000';
-    buffer.lineWidth = 2;
-    var loop_counter = 1;
-    do{
-        buffer.beginPath();
-        buffer.rect(
-          0,
-          50 * loop_counter,
-          50,
-          50
-        );
-        buffer.closePath();
-        buffer.fill();
-        buffer.stroke();
-    }while(loop_counter--);
-
-    // Draw create fish button +.
-    buffer.fillStyle = '#fff';
-    buffer.fillRect(
-      10,
-      20,
-      30,
-      10
-    );
-    buffer.fillRect(
-      20,
-      10,
-      10,
-      30
-    );
-
     // Draw current camera position.
+    buffer.fillStyle = '#fff';
     buffer.font = '23pt sans-serif';
     buffer.fillText(
       camera_x + 'x ' + camera_y + 'y',
       0,
-      height - 10
+      25
     );
     buffer.fillText(
       fish.length + ' fish',
       0,
-      height - 40
+      50
     );
-
-    // Draw clear button X.
-    buffer.beginPath();
-    buffer.moveTo(
-      10,
-      60
-    );
-    buffer.lineTo(
-      40,
-      90
-    );
-    buffer.moveTo(
-      40,
-      60
-    );
-    buffer.lineTo(
-      10,
-      90
-    );
-    buffer.closePath();
-    buffer.strokeStyle = '#f00';
-    buffer.lineWidth = 5;
-    buffer.stroke();
 
     canvas.clearRect(
       0,
@@ -258,19 +203,19 @@ var y = 0;
 window.onkeydown = function(e){
     var key = e.keyCode || e.which;
 
-    // A: move left.
+    // A: move camera left.
     if(key == 65){
         key_left = true;
 
-    // D: move right.
+    // D: move camera right.
     }else if(key == 68){
         key_right = true;
 
-    // S: move down.
+    // S: move camera down.
     }else if(key == 83){
         key_down = true;
 
-    // W: move up.
+    // W: move camera up.
     }else if(key == 87){
         key_up = true;
 
@@ -278,7 +223,7 @@ window.onkeydown = function(e){
     }else if(key == 16){
         sprint_modifier = 2;
 
-    // H: reset camera position.
+    // Shift: decrease camera speed.
     }else if(key == 72){
         move_pillar(camera_x);
         camera_x = 0;
@@ -288,8 +233,8 @@ window.onkeydown = function(e){
     }else if(key == 70){
         create_fish();
 
-    // C: clear all fish.
-    }else if(key == 67){
+    // ESC: clear all fish.
+    }else if(key == 27){
         fish.length = 0;
     }
 };
@@ -297,19 +242,24 @@ window.onkeydown = function(e){
 window.onkeyup = function(e){
     var key = e.keyCode || e.which;
 
-    if(key == 65){// A
+    // A: stop moving camera left.
+    if(key == 65){
         key_left = false;
 
-    }else if(key == 68){// D
+    // D: stop moving camera right.
+    }else if(key == 68){
         key_right = false;
 
-    }else if(key == 83){// S
+    // S: stop moving camera down.
+    }else if(key == 83){
         key_down = false;
 
-    }else if(key == 87){// W
+    // W: stop moving camera up.
+    }else if(key == 87){
         key_up = false;
 
-    }else if(key == 16){// shift
+    // Shift: decrease camera speed.
+    }else if(key == 16){
         sprint_modifier = 1;
     }
 };
@@ -331,24 +281,6 @@ window.onload = function(){
       'logic()',
       30
     );
-};
-
-window.onmousedown = function(e){
-    e.preventDefault();
-
-    // Check if clicked on a UI button.
-    if(e.pageX >= 50){
-        return;
-    }
-
-    // Create fish button.
-    if(e.pageY < 50){
-        create_fish();
-
-    // Clear all fish button.
-    }else if(e.pageY < 100){
-        fish.length = 0;
-    }
 };
 
 window.onresize = resize;
