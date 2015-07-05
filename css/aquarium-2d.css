@@ -1,3 +1,6 @@
+#buffer{
+    display: none;
+}
 canvas{
     background: #004;
     left: 0;
