@@ -1,3 +1,5 @@
+'use strict';
+
 function create_fish(){
     // Determine fish class.
     var fish_class = Math.random();
