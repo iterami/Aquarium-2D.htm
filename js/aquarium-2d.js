@@ -206,37 +206,37 @@ window.onkeydown = function(e){
     var key = e.keyCode || e.which;
 
     // A: move camera left.
-    if(key == 65){
+    if(key === 65){
         key_left = true;
 
     // D: move camera right.
-    }else if(key == 68){
+    }else if(key === 68){
         key_right = true;
 
     // S: move camera down.
-    }else if(key == 83){
+    }else if(key === 83){
         key_down = true;
 
     // W: move camera up.
-    }else if(key == 87){
+    }else if(key === 87){
         key_up = true;
 
     // Shift: decrease camera speed.
-    }else if(key == 16){
+    }else if(key === 16){
         sprint_modifier = 2;
 
     // H: reset camera position.
-    }else if(key == 72){
+    }else if(key === 72){
         move_pillar(camera_x);
         camera_x = 0;
         camera_y = 0;
 
     // F: create new fish.
-    }else if(key == 70){
+    }else if(key === 70){
         create_fish();
 
     // ESC: clear all fish.
-    }else if(key == 27){
+    }else if(key === 27){
         fish.length = 0;
     }
 };
@@ -245,23 +245,23 @@ window.onkeyup = function(e){
     var key = e.keyCode || e.which;
 
     // A: stop moving camera left.
-    if(key == 65){
+    if(key === 65){
         key_left = false;
 
     // D: stop moving camera right.
-    }else if(key == 68){
+    }else if(key === 68){
         key_right = false;
 
     // S: stop moving camera down.
-    }else if(key == 83){
+    }else if(key === 83){
         key_down = false;
 
     // W: stop moving camera up.
-    }else if(key == 87){
+    }else if(key === 87){
         key_up = false;
 
     // Shift: decrease camera speed.
-    }else if(key == 16){
+    }else if(key === 16){
         sprint_modifier = 1;
     }
 };
