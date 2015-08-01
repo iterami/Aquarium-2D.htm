@@ -146,11 +146,10 @@ function logic(){
         //   replace it with a new fish.
         if(fish[id]['x'] > camera_x + x + fish[id]['size'] * 4
           || fish[id]['x'] < camera_x - x - fish[id]['size'] * 4){
-            fish.splice(
-              id,
-              1
-            );
-            create_fish();
+            fish[id]['x'] = fish[id]['x'] < 0
+              ? x
+              : -x;
+            fish[id]['y'] = camera_y + Math.floor(Math.random() * height) - y;
         }
     }
 }
