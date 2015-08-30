@@ -101,7 +101,7 @@ function draw(){
       25
     );
     buffer.fillText(
-      fish.length + ' fish',
+      fish.length,
       0,
       50
     );
