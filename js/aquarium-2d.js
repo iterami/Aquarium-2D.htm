@@ -25,9 +25,9 @@ function create_fish(){
       'size': fish_size,
       'speed': fish_speed,
       'x': fish_speed < 0
-        ? camera_x - x - fish_size
-        : camera_x + x + fish_size,
-      'y': camera_y + Math.floor(Math.random() * height) - y,
+        ? camera_x - fish_size
+        : camera_x + fish_size + width,
+      'y': camera_y + Math.floor(Math.random() * height),
     });
 }
 
@@ -52,8 +52,8 @@ function draw(){
 
     // Draw stuff relative to center of canvas.
     buffer.translate(
-      x - camera_x,
-      y - camera_y
+      -camera_x,
+      -camera_y
     );
 
     for(var id in fish){
@@ -142,13 +142,14 @@ function logic(){
         fish[id]['x'] -= fish[id]['speed'];
 
         // If a fish travels past the edge of the screen,
-        //   replace it with a new fish.
-        if(fish[id]['x'] > camera_x + x + fish[id]['size'] * 4
-          || fish[id]['x'] < camera_x - x - fish[id]['size'] * 4){
-            fish[id]['x'] = fish[id]['x'] < 0
-              ? x
-              : -x;
-            fish[id]['y'] = camera_y + Math.floor(Math.random() * height) - y;
+        //   move it to the other side.
+        var size = fish[id]['size'] * 4;
+        if(fish[id]['x'] > camera_x + width + size
+          || fish[id]['x'] < camera_x - size){
+            fish[id]['x'] += fish[id]['speed'] < 0
+              ? -width - size
+              : width + size;
+            fish[id]['y'] = camera_y + Math.floor(Math.random() * height);
         }
     }
 }
