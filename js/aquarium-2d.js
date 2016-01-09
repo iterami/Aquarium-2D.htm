@@ -123,18 +123,18 @@ function draw(){
 
 function logic(){
     if(key_left){
-        camera_x -= 5 * sprint_modifier;
-        move_pillar(5);
+        camera_x -= camera_speed * sprint_modifier;
+        move_pillar(camera_speed);
     }
     if(key_right){
-        camera_x += 5 * sprint_modifier;
-        move_pillar(-5);
+        camera_x += camera_speed * sprint_modifier;
+        move_pillar(-camera_speed);
     }
     if(key_down){
-        camera_y += 5 * sprint_modifier;
+        camera_y += camera_speed * sprint_modifier;
     }
     if(key_up){
-        camera_y -= 5 * sprint_modifier;
+        camera_y -= camera_speed * sprint_modifier;
     }
 
     for(var id in fish){
@@ -190,6 +190,7 @@ function resize(){
 var buffer = document.getElementById('buffer').getContext('2d', {
   'alpha': false,
 });
+var camera_speed = 5;
 var camera_x = 0;
 var camera_y = 0;
 var canvas = document.getElementById('canvas').getContext('2d');
