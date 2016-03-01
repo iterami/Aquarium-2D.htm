@@ -12,3 +12,8 @@ Create Fish  | F
 Move Camera  | WASD
 Move Faster  | Hold Shift
 Reset Camera | H
+
+---
+
+Requires:
+* [iterami/common](https://github.com/iterami/common)
