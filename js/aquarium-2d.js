@@ -31,14 +31,7 @@ function create_fish(){
     });
 }
 
-function draw(){
-    buffer.clearRect(
-      0,
-      0,
-      width,
-      height
-    );
-
+function draw_logic(){
     buffer.fillStyle = '#003';
     buffer.fillRect(
       pillar,
@@ -105,20 +98,6 @@ function draw(){
       0,
       50
     );
-
-    canvas.clearRect(
-      0,
-      0,
-      width,
-      height
-    );
-    canvas.drawImage(
-      document.getElementById('buffer'),
-      0,
-      0
-    );
-
-    window.requestAnimationFrame(draw);
 }
 
 function logic(){
@@ -173,38 +152,23 @@ function random_hex(){
       + choices.charAt(Math.floor(Math.random() * 16));
 }
 
-function resize(){
-    height = window.innerHeight;
-    document.getElementById('buffer').height = height;
-    document.getElementById('canvas').height = height;
-    y = height / 2;
-
-    width = window.innerWidth;
-    document.getElementById('buffer').width = width;
-    document.getElementById('canvas').width = width;
-    x = width / 2;
+function resize_logic(){
+    // Randomize pillar X.
+    move_pillar(Math.floor(Math.random() * width));
 
     buffer.font = '23pt sans-serif';
 }
 
-var buffer = document.getElementById('buffer').getContext('2d', {
-  'alpha': false,
-});
 var camera_speed = 5;
 var camera_x = 0;
 var camera_y = 0;
-var canvas = document.getElementById('canvas').getContext('2d');
 var fish = [];
-var height = 0;
 var key_down = false;
 var key_left = false;
 var key_right = false;
 var key_up = false;
 var pillar = 0;
 var sprint_modifier = 1;
-var width = 0;
-var x = 0;
-var y = 0;
 
 window.onkeydown = function(e){
     var key = e.keyCode || e.which;
@@ -271,22 +235,13 @@ window.onkeyup = function(e){
 };
 
 window.onload = function(){
-    resize();
-
-    // Randomize pillar X.
-    move_pillar(Math.floor(Math.random() * width));
+    init_canvas();
 
     // Create 10 randomly placed fish.
     var loop_counter = 9;
     do{
         create_fish();
     }while(loop_counter--);
-
-    window.requestAnimationFrame(draw);
-    window.setInterval(
-      logic,
-      30
-    );
 };
 
 window.onresize = resize;
