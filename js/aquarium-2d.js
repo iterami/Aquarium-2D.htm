@@ -237,11 +237,11 @@ window.onkeyup = function(e){
 window.onload = function(){
     init_canvas();
 
+    document.getElementById('canvas').style.background = '#004';
+
     // Create 10 randomly placed fish.
     var loop_counter = 9;
     do{
         create_fish();
     }while(loop_counter--);
 };
-
-window.onresize = resize;
