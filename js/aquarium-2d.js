@@ -101,18 +101,18 @@ function draw_logic(){
 }
 
 function logic(){
-    if(key_left){
+    if(keys[65]['state']){
         camera_x -= camera_speed * sprint_modifier;
         move_pillar(camera_speed);
     }
-    if(key_right){
+    if(keys[68]['state']){
         camera_x += camera_speed * sprint_modifier;
         move_pillar(-camera_speed);
     }
-    if(key_down){
+    if(keys[83]['state']){
         camera_y += camera_speed * sprint_modifier;
     }
-    if(key_up){
+    if(keys[87]['state']){
         camera_y -= camera_speed * sprint_modifier;
     }
 
@@ -163,79 +163,43 @@ var camera_speed = 5;
 var camera_x = 0;
 var camera_y = 0;
 var fish = [];
-var key_down = false;
-var key_left = false;
-var key_right = false;
-var key_up = false;
 var pillar = 0;
 var sprint_modifier = 1;
 
-window.onkeydown = function(e){
-    var key = e.keyCode || e.which;
-
-    // A: move camera left.
-    if(key === 65){
-        key_left = true;
-
-    // D: move camera right.
-    }else if(key === 68){
-        key_right = true;
-
-    // S: move camera down.
-    }else if(key === 83){
-        key_down = true;
-
-    // W: move camera up.
-    }else if(key === 87){
-        key_up = true;
-
-    // Shift: decrease camera speed.
-    }else if(key === 16){
-        sprint_modifier = 2;
-
-    // H: reset camera position.
-    }else if(key === 72){
-        move_pillar(camera_x);
-        camera_x = 0;
-        camera_y = 0;
-
-    // F: create new fish.
-    }else if(key === 70){
-        create_fish();
-
-    // ESC: clear all fish.
-    }else if(key === 27){
-        fish.length = 0;
-    }
-};
-
-window.onkeyup = function(e){
-    var key = e.keyCode || e.which;
-
-    // A: stop moving camera left.
-    if(key === 65){
-        key_left = false;
-
-    // D: stop moving camera right.
-    }else if(key === 68){
-        key_right = false;
-
-    // S: stop moving camera down.
-    }else if(key === 83){
-        key_down = false;
-
-    // W: stop moving camera up.
-    }else if(key === 87){
-        key_up = false;
-
-    // Shift: decrease camera speed.
-    }else if(key === 16){
-        sprint_modifier = 1;
-    }
-};
-
 window.onload = function(){
     init_canvas();
+    init_input(
+      {
+        16: {
+          'todo': function(){
+              sprint_modifier = keys[16]['state']
+                ? 2
+                : 1;
+          },
+        },
+        27: {
+          'todo': function(){
+              fish.length = 0;
+          },
+        },
+        65: {},
+        68: {},
+        70: {
+          'todo': function(){
+              create_fish();
+          },
+        },
+        72: {
+          'todo': function(){
+              move_pillar(camera_x);
+              camera_x = 0;
+              camera_y = 0;
+          },
+        },
+        83: {},
+        87: {},
+      }
+    );
 
     document.getElementById('canvas').style.background = '#004';
 
