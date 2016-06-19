@@ -185,9 +185,7 @@ window.onload = function(){
         65: {},
         68: {},
         70: {
-          'todo': function(){
-              create_fish();
-          },
+          'todo': create_fish,
         },
         72: {
           'todo': function(){
