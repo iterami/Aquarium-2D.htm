@@ -156,7 +156,7 @@ function resize_logic(){
     // Randomize pillar X.
     move_pillar(Math.floor(Math.random() * width));
 
-    buffer.font = '23pt sans-serif';
+    buffer.font = font;
 }
 
 var camera_speed = 5;
