@@ -155,8 +155,6 @@ function random_hex(){
 function resize_logic(){
     // Randomize pillar X.
     move_pillar(Math.floor(Math.random() * width));
-
-    buffer.font = font;
 }
 
 var camera_speed = 5;
