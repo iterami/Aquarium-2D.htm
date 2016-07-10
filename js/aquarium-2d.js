@@ -101,18 +101,18 @@ function draw_logic(){
 }
 
 function logic(){
-    if(keys[65]['state']){
+    if(input_keys[65]['state']){
         camera_x -= camera_speed * sprint_modifier;
         move_pillar(camera_speed);
     }
-    if(keys[68]['state']){
+    if(input_keys[68]['state']){
         camera_x += camera_speed * sprint_modifier;
         move_pillar(-camera_speed);
     }
-    if(keys[83]['state']){
+    if(input_keys[83]['state']){
         camera_y += camera_speed * sprint_modifier;
     }
-    if(keys[87]['state']){
+    if(input_keys[87]['state']){
         camera_y -= camera_speed * sprint_modifier;
     }
 
@@ -166,11 +166,11 @@ var sprint_modifier = 1;
 
 window.onload = function(){
     init_canvas();
-    init_input(
+    input_init(
       {
         16: {
           'todo': function(){
-              sprint_modifier = keys[16]['state']
+              sprint_modifier = input_keys[16]['state']
                 ? 2
                 : 1;
           },
