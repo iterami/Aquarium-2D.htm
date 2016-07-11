@@ -26,25 +26,25 @@ function create_fish(){
       'speed': fish_speed,
       'x': fish_speed < 0
         ? camera_x - fish_size
-        : camera_x + fish_size + width,
-      'y': camera_y + Math.floor(Math.random() * height),
+        : camera_x + fish_size + canvas_width,
+      'y': camera_y + Math.floor(Math.random() * canvas_height),
     });
 }
 
 function draw_logic(){
-    buffer.fillStyle = '#003';
-    buffer.fillRect(
+    canvas_buffer.fillStyle = '#003';
+    canvas_buffer.fillRect(
       pillar,
       0,
       100,
-      height
+      canvas_height
     );
 
     // Save the current buffer state.
-    buffer.save();
+    canvas_buffer.save();
 
     // Draw stuff relative to center of canvas.
-    buffer.translate(
+    canvas_buffer.translate(
       -camera_x,
       -camera_y
     );
@@ -56,44 +56,44 @@ function draw_logic(){
           : -1;
 
         // Draw fish.
-        buffer.beginPath();
-        buffer.moveTo(
+        canvas_buffer.beginPath();
+        canvas_buffer.moveTo(
           fish[id]['x'],
           fish[id]['y'] + fish[id]['size'] / 2
         );
-        buffer.lineTo(
+        canvas_buffer.lineTo(
           fish[id]['x'] + fish[id]['size'] * direction,
           fish[id]['y']
         );
-        buffer.lineTo(
+        canvas_buffer.lineTo(
           fish[id]['x'] + fish[id]['size'] * 3 * direction,
           fish[id]['y'] + fish[id]['size']
         );
-        buffer.lineTo(
+        canvas_buffer.lineTo(
           fish[id]['x'] + fish[id]['size'] * 3 * direction,
           fish[id]['y']
         );
-        buffer.lineTo(
+        canvas_buffer.lineTo(
           fish[id]['x'] + fish[id]['size'] * direction,
           fish[id]['y'] + fish[id]['size']
         );
-        buffer.closePath();
+        canvas_buffer.closePath();
 
-        buffer.fillStyle = fish[id]['color'];
-        buffer.fill();
+        canvas_buffer.fillStyle = fish[id]['color'];
+        canvas_buffer.fill();
     }
 
     // Restore the buffer state.
-    buffer.restore();
+    canvas_buffer.restore();
 
     // Draw current camera position.
-    buffer.fillStyle = '#fff';
-    buffer.fillText(
+    canvas_buffer.fillStyle = '#fff';
+    canvas_buffer.fillText(
       camera_x + 'x ' + camera_y + 'y',
       0,
       25
     );
-    buffer.fillText(
+    canvas_buffer.fillText(
       fish.length,
       0,
       50
@@ -123,12 +123,12 @@ function logic(){
         // If a fish travels past the edge of the screen,
         //   move it to the other side.
         var size = fish[id]['size'] * 4;
-        if(fish[id]['x'] > camera_x + width + size
+        if(fish[id]['x'] > camera_x + canvas_width + size
           || fish[id]['x'] < camera_x - size){
             fish[id]['x'] += fish[id]['speed'] < 0
-              ? -width - size
-              : width + size;
-            fish[id]['y'] = camera_y + Math.floor(Math.random() * height);
+              ? -canvas_width - size
+              : canvas_width + size;
+            fish[id]['y'] = camera_y + Math.floor(Math.random() * canvas_height);
         }
     }
 }
@@ -136,11 +136,11 @@ function logic(){
 function move_pillar(amount){
     pillar += amount * sprint_modifier;
 
-    if(pillar > width){
-        pillar -= width + 100;
+    if(pillar > canvas_width){
+        pillar -= canvas_width + 100;
 
     }else if(pillar < -100){
-        pillar += width + 100;
+        pillar += canvas_width + 100;
     }
 }
 
@@ -154,7 +154,7 @@ function random_hex(){
 
 function resize_logic(){
     // Randomize pillar X.
-    move_pillar(Math.floor(Math.random() * width));
+    move_pillar(Math.floor(Math.random() * canvas_width));
 }
 
 var camera_speed = 5;
@@ -165,7 +165,7 @@ var pillar = 0;
 var sprint_modifier = 1;
 
 window.onload = function(){
-    init_canvas();
+    canvas_init();
     input_init(
       {
         16: {
