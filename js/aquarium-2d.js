@@ -18,13 +18,14 @@ function create_fish(){
         fish_size = random_integer(500) + 50;
     }
 
-    var fish_speed = Math.random() * 10 - 5;
+    var fish_dx = Math.random() * 10 - 5;
 
     fish.push({
       'color': random_hex(),
+      'dx': fish_dx,
+      'dy': Math.random() * (fish_dx / 2) - fish_dx / 4,
       'size': fish_size,
-      'speed': fish_speed,
-      'x': fish_speed < 0
+      'x': fish_dx < 0
         ? camera_x - fish_size
         : camera_x + fish_size + canvas_width,
       'y': camera_y + random_integer(canvas_height),
@@ -50,8 +51,8 @@ function draw_logic(){
     );
 
     for(var id in fish){
-        // Determine movement direction based on speed.
-        var direction = fish[id]['speed'] > 0
+        // Determine movement direction based on dx.
+        var direction = fish[id]['dx'] > 0
           ? 1
           : -1;
 
@@ -118,14 +119,15 @@ function logic(){
 
     for(var id in fish){
         // Fish move in the direction they are facing.
-        fish[id]['x'] -= fish[id]['speed'];
+        fish[id]['x'] -= fish[id]['dx'];
+        fish[id]['y'] -= fish[id]['dy'];
 
         // If a fish travels past the edge of the screen,
         //   move it to the other side.
         var size = fish[id]['size'] * 4;
         if(fish[id]['x'] > camera_x + canvas_width + size
           || fish[id]['x'] < camera_x - size){
-            fish[id]['x'] += fish[id]['speed'] < 0
+            fish[id]['x'] += fish[id]['dx'] < 0
               ? -canvas_width - size
               : canvas_width + size;
             fish[id]['y'] = camera_y + random_integer(canvas_height);
