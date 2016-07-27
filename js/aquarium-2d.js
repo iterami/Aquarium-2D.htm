@@ -21,6 +21,7 @@ function create_fish(){
     var fish_dx = Math.random() * 10 - 5;
 
     fish.push({
+      'angle': 0,
       'color': random_hex(),
       'dx': fish_dx,
       'dy': Math.random() * (fish_dx / 2) - fish_dx / 4,
@@ -30,6 +31,13 @@ function create_fish(){
         : camera_x + fish_size + canvas_width,
       'y': camera_y + random_integer(canvas_height),
     });
+    var fish_id = fish.length - 1;
+    fish[fish_id]['angle'] = math_movement_speed(
+      fish[fish_id]['x'],
+      fish[fish_id]['y'],
+      fish[fish_id]['x'] + fish[fish_id]['dx'],
+      fish[fish_id]['y'] + fish[fish_id]['dy']
+    )[2];
 }
 
 function draw_logic(){
@@ -51,6 +59,11 @@ function draw_logic(){
     );
 
     for(var id in fish){
+        canvas_buffer.save();
+
+        // Rotate fish.
+        canvas_buffer.rotate(fish[id]['angle']);
+
         // Determine movement direction based on dx.
         var direction = fish[id]['dx'] > 0
           ? 1
@@ -82,6 +95,8 @@ function draw_logic(){
 
         canvas_buffer.fillStyle = fish[id]['color'];
         canvas_buffer.fill();
+
+        canvas_buffer.restore();
     }
 
     // Restore the buffer state.
