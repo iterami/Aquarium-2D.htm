@@ -18,26 +18,18 @@ function create_fish(){
         fish_size = random_integer(500) + 50;
     }
 
-    var fish_dx = Math.random() * 10 - 5;
 
     fish.push({
       'angle': 0,
       'color': random_hex(),
-      'dx': fish_dx,
-      'dy': Math.random() * (fish_dx / 2) - fish_dx / 4,
+      'dx': 0,
+      'dy': 0,
       'size': fish_size,
-      'x': fish_dx < 0
-        ? camera_x - fish_size
-        : camera_x + fish_size + canvas_width,
-      'y': camera_y + random_integer(canvas_height),
+      'x': 0,
+      'y': 0,
     });
-    var fish_id = fish.length - 1;
-    fish[fish_id]['angle'] = math_movement_speed(
-      fish[fish_id]['x'],
-      fish[fish_id]['y'],
-      fish[fish_id]['x'] + fish[fish_id]['dx'],
-      fish[fish_id]['y'] + fish[fish_id]['dy']
-    )[2];
+
+    randomize_fish_movement(fish.length - 1);
 }
 
 function draw_logic(){
@@ -150,6 +142,8 @@ function logic(){
               ? -canvas_width - size
               : canvas_width + size;
             fish[id]['y'] = camera_y + random_integer(canvas_height);
+
+            randomize_fish_movement(id);
         }
     }
 }
@@ -162,6 +156,27 @@ function move_pillar(amount){
 
     }else if(pillar < -100){
         pillar += canvas_width + 100;
+    }
+}
+
+function randomize_fish_movement(fish_id){
+    fish[fish_id]['dx'] = Math.random() * 10 - 5;
+    fish[fish_id]['dy'] = Math.random() * (fish[fish_id]['dx'] / 2) - fish[fish_id]['dx'] / 4;
+    fish[fish_id]['x'] = fish[fish_id]['dx'] < 0
+      ? camera_x - fish[fish_id]['size']
+      : camera_x + fish[fish_id]['size'] + canvas_width;
+    fish[fish_id]['y'] = camera_y + random_integer(canvas_height);
+
+    fish[fish_id]['angle'] = math_movement_speed(
+      fish[fish_id]['x'],
+      fish[fish_id]['y'],
+      fish[fish_id]['x'] + fish[fish_id]['dx'],
+      fish[fish_id]['y'] + fish[fish_id]['dy']
+    )[2];
+
+    if(fish[fish_id]['dx'] < 0
+      || fish[fish_id]['dy'] > 0){
+        fish[fish_id]['angle'] *= -1;
     }
 }
 
