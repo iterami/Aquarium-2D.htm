@@ -117,19 +117,23 @@ function draw_logic(){
 }
 
 function logic(){
+    camera_speed = input_keys[16]['state']
+      ? 10
+      : 5;
+
     if(input_keys[65]['state']){
-        camera_x -= camera_speed * sprint_modifier;
+        camera_x -= camera_speed;
         move_pillar(camera_speed);
     }
     if(input_keys[68]['state']){
-        camera_x += camera_speed * sprint_modifier;
+        camera_x += camera_speed;
         move_pillar(-camera_speed);
     }
     if(input_keys[83]['state']){
-        camera_y += camera_speed * sprint_modifier;
+        camera_y += camera_speed;
     }
     if(input_keys[87]['state']){
-        camera_y -= camera_speed * sprint_modifier;
+        camera_y -= camera_speed;
     }
 
     for(var id in fish){
@@ -151,7 +155,7 @@ function logic(){
 }
 
 function move_pillar(amount){
-    pillar += amount * sprint_modifier;
+    pillar += amount;
 
     if(pillar > canvas_width){
         pillar -= canvas_width + 100;
@@ -170,19 +174,12 @@ var camera_x = 0;
 var camera_y = 0;
 var fish = [];
 var pillar = 0;
-var sprint_modifier = 1;
 
 window.onload = function(){
     canvas_init();
     input_init(
       {
-        16: {
-          'todo': function(){
-              sprint_modifier = input_keys[16]['state']
-                ? 2
-                : 1;
-          },
-        },
+        16: {},
         27: {
           'todo': function(){
               fish.length = 0;
