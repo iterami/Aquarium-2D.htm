@@ -54,6 +54,10 @@ function draw_logic(){
         canvas_buffer.save();
 
         // Rotate fish.
+        canvas_buffer.translate(
+          fish[id]['x'],
+          fish[id]['y']
+        );
         canvas_buffer.rotate(fish[id]['angle']);
 
         // Determine movement direction based on dx.
@@ -64,24 +68,24 @@ function draw_logic(){
         // Draw fish.
         canvas_buffer.beginPath();
         canvas_buffer.moveTo(
-          fish[id]['x'],
-          fish[id]['y'] + fish[id]['size'] / 2
+          0,
+          fish[id]['size'] / 2
         );
         canvas_buffer.lineTo(
-          fish[id]['x'] + fish[id]['size'] * direction,
-          fish[id]['y']
+          fish[id]['size'] * direction,
+          0
         );
         canvas_buffer.lineTo(
-          fish[id]['x'] + fish[id]['size'] * 3 * direction,
-          fish[id]['y'] + fish[id]['size']
+          fish[id]['size'] * 3 * direction,
+          fish[id]['size']
         );
         canvas_buffer.lineTo(
-          fish[id]['x'] + fish[id]['size'] * 3 * direction,
-          fish[id]['y']
+          fish[id]['size'] * 3 * direction,
+          0
         );
         canvas_buffer.lineTo(
-          fish[id]['x'] + fish[id]['size'] * direction,
-          fish[id]['y'] + fish[id]['size']
+          fish[id]['size'] * direction,
+          fish[id]['size']
         );
         canvas_buffer.closePath();
 
@@ -174,8 +178,13 @@ function randomize_fish_movement(fish_id){
       fish[fish_id]['y'] + fish[fish_id]['dy']
     )[2];
 
-    if(fish[fish_id]['dx'] < 0
+    if(fish[fish_id]['dx'] > 0
       || fish[fish_id]['dy'] > 0){
+        fish[fish_id]['angle'] *= -1;
+    }
+
+    if(fish[fish_id]['dx'] > 0
+      && fish[fish_id]['dy'] > 0){
         fish[fish_id]['angle'] *= -1;
     }
 }
