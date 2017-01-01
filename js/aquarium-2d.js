@@ -7,15 +7,21 @@ function create_fish(){
     var fish_size = 0;
     // 60% chance to be normal sized fish...
     if(fish_class < .6){
-        fish_size = random_integer(25) + 25;
+        fish_size = random_integer({
+          'max': 25,
+        }) + 25;
 
     // 88% chance to be a small fish...
     }else if(fish_class < .88){
-        fish_size = random_integer(10) + 5;
+        fish_size = random_integer({
+          'max': 10,
+        }) + 5;
 
     // ...else is a giant fish.
     }else{
-        fish_size = random_integer(500) + 50;
+        fish_size = random_integer({
+          'max': 500,
+        }) + 50;
     }
 
 
@@ -145,7 +151,9 @@ function logic(){
             fish[id]['x'] += fish[id]['dx'] < 0
               ? -canvas_width - size
               : canvas_width + size;
-            fish[id]['y'] = camera_y + random_integer(canvas_height);
+            fish[id]['y'] = camera_y + random_integer({
+              'max': canvas_height,
+            });
 
             randomize_fish_movement(id);
         }
@@ -169,7 +177,9 @@ function randomize_fish_movement(fish_id){
     fish[fish_id]['x'] = fish[fish_id]['dx'] < 0
       ? camera_x - fish[fish_id]['size']
       : camera_x + fish[fish_id]['size'] + canvas_width;
-    fish[fish_id]['y'] = camera_y + random_integer(canvas_height);
+    fish[fish_id]['y'] = camera_y + random_integer({
+      'max': canvas_height,
+    });
 
     fish[fish_id]['angle'] = math_movement_speed(
       fish[fish_id]['x'],
@@ -190,7 +200,9 @@ function randomize_fish_movement(fish_id){
 }
 
 function resize_logic(){
-    move_pillar(random_integer(canvas_width));
+    move_pillar(random_integer({
+      'max': canvas_width,
+    }));
 }
 
 var camera_speed = 5;
