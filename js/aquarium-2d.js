@@ -213,8 +213,8 @@ var pillar = 0;
 
 window.onload = function(){
     canvas_init();
-    input_init(
-      {
+    input_init({
+      'keybinds': {
         16: {},
         27: {
           'todo': function(){
@@ -235,8 +235,8 @@ window.onload = function(){
         },
         83: {},
         87: {},
-      }
-    );
+      },
+    });
 
     document.getElementById('canvas').style.background = '#004';
 
