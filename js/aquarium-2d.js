@@ -59,7 +59,7 @@ function draw_logic(){
     for(var id in fish){
         canvas_buffer.save();
 
-        // Rotate fish.
+        // Translate and rotate fish.
         canvas_buffer.translate(
           fish[id]['x'],
           fish[id]['y']
@@ -72,31 +72,38 @@ function draw_logic(){
           : -1;
 
         // Draw fish.
-        canvas_buffer.beginPath();
-        canvas_buffer.moveTo(
-          0,
-          fish[id]['size'] / 2
-        );
-        canvas_buffer.lineTo(
-          fish[id]['size'] * direction,
-          0
-        );
-        canvas_buffer.lineTo(
-          fish[id]['size'] * 3 * direction,
-          fish[id]['size']
-        );
-        canvas_buffer.lineTo(
-          fish[id]['size'] * 3 * direction,
-          0
-        );
-        canvas_buffer.lineTo(
-          fish[id]['size'] * direction,
-          fish[id]['size']
-        );
-        canvas_buffer.closePath();
-
-        canvas_buffer.fillStyle = fish[id]['color'];
-        canvas_buffer.fill();
+        canvas_draw_path({
+          'properties': {
+            'fillStyle': fish[id]['color'],
+          },
+          'vertices': [
+            {
+              'type': 'moveTo',
+              'x': 0,
+              'y': fish[id]['size'] / 2,
+            },
+            {
+              'type': 'lineTo',
+              'x': fish[id]['size'] * direction,
+              'y': 0,
+            },
+            {
+              'type': 'lineTo',
+              'x': fish[id]['size'] * 3 * direction,
+              'y': fish[id]['size'],
+            },
+            {
+              'type': 'lineTo',
+              'x': fish[id]['size'] * 3 * direction,
+              'y': 0,
+            },
+            {
+              'type': 'lineTo',
+              'x': fish[id]['size'] * direction,
+              'y': fish[id]['size'],
+            },
+          ],
+        });
 
         canvas_buffer.restore();
     }
@@ -181,12 +188,12 @@ function randomize_fish_movement(fish_id){
       'max': canvas_height,
     });
 
-    fish[fish_id]['angle'] = math_movement_speed(
-      fish[fish_id]['x'],
-      fish[fish_id]['y'],
-      fish[fish_id]['x'] + fish[fish_id]['dx'],
-      fish[fish_id]['y'] + fish[fish_id]['dy']
-    )[2];
+    fish[fish_id]['angle'] = math_movement_speed({
+      'x0': fish[fish_id]['x'],
+      'x1': fish[fish_id]['x'] + fish[fish_id]['dx'],
+      'y0': fish[fish_id]['y'],
+      'y1': fish[fish_id]['y'] + fish[fish_id]['dy'],
+    })[2];
 
     if(fish[fish_id]['dx'] > 0
       || fish[fish_id]['dy'] > 0){
