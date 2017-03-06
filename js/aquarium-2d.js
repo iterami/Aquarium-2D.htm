@@ -188,7 +188,7 @@ function randomize_fish_movement(fish_id){
       'max': canvas_height,
     });
 
-    fish[fish_id]['angle'] = math_movement_speed({
+    fish[fish_id]['angle'] = math_move_2d({
       'x0': fish[fish_id]['x'],
       'x1': fish[fish_id]['x'] + fish[fish_id]['dx'],
       'y0': fish[fish_id]['y'],
