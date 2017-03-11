@@ -193,7 +193,7 @@ function randomize_fish_movement(fish_id){
       'x1': fish[fish_id]['x'] + fish[fish_id]['dx'],
       'y0': fish[fish_id]['y'],
       'y1': fish[fish_id]['y'] + fish[fish_id]['dy'],
-    })[2];
+    })['angle'];
 
     if(fish[fish_id]['dx'] > 0
       || fish[fish_id]['dy'] > 0){
