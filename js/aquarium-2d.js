@@ -27,7 +27,7 @@ function create_fish(){
 
     fish.push({
       'angle': 0,
-      'color': random_hex(),
+      'color': '#'+ random_hex(),
       'dx': 0,
       'dy': 0,
       'size': fish_size,
