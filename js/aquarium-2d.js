@@ -1,18 +1,17 @@
 'use strict';
 
 function create_fish(){
-    // Determine fish class.
-    var fish_class = Math.random();
+    // Determine fish size.
+    var fish_size = Math.random();
 
-    var fish_size = 0;
-    // 60% chance to be normal sized fish...
-    if(fish_class < .6){
+    // Chance to be normal sized fish...
+    if(fish_size < .6){
         fish_size = random_integer({
           'max': 25,
         }) + 25;
 
-    // 88% chance to be a small fish...
-    }else if(fish_class < .88){
+    // ...or chance to be a small fish...
+    }else if(fish_size < .88){
         fish_size = random_integer({
           'max': 10,
         }) + 5;
@@ -27,7 +26,7 @@ function create_fish(){
 
     fish.push({
       'angle': 0,
-      'color': '#'+ random_hex(),
+      'color': '#' + random_hex(),
       'dx': 0,
       'dy': 0,
       'size': fish_size,
@@ -247,7 +246,6 @@ window.onload = function(){
 
     document.getElementById('canvas').style.background = '#004';
 
-    // Create 10 randomly placed fish.
     var loop_counter = 9;
     do{
         create_fish();
