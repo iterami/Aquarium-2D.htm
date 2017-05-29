@@ -205,21 +205,9 @@ function randomize_fish_movement(fish_id){
     }
 }
 
-function resize_logic(){
-    move_pillar(core_random_integer({
-      'max': canvas_width,
-    }));
-}
-
-var camera_speed = 5;
-var camera_x = 0;
-var camera_y = 0;
-var fish = [];
-var pillar = 0;
-
-window.onload = function(){
+function repo_init(){
     canvas_init();
-    core_input_init({
+    core_input_binds_add({
       'keybinds': {
         16: {},
         27: {
@@ -250,4 +238,16 @@ window.onload = function(){
     do{
         create_fish();
     }while(loop_counter--);
-};
+}
+
+function resize_logic(){
+    move_pillar(core_random_integer({
+      'max': canvas_width,
+    }));
+}
+
+var camera_speed = 5;
+var camera_x = 0;
+var camera_y = 0;
+var fish = [];
+var pillar = 0;
