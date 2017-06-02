@@ -82,22 +82,18 @@ function draw_logic(){
               'y': fish[id]['size'] / 2,
             },
             {
-              'type': 'lineTo',
               'x': fish[id]['size'] * direction,
               'y': 0,
             },
             {
-              'type': 'lineTo',
               'x': fish[id]['size'] * 3 * direction,
               'y': fish[id]['size'],
             },
             {
-              'type': 'lineTo',
               'x': fish[id]['size'] * 3 * direction,
               'y': 0,
             },
             {
-              'type': 'lineTo',
               'x': fish[id]['size'] * direction,
               'y': fish[id]['size'],
             },
