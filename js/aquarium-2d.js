@@ -121,22 +121,22 @@ function draw_logic(){
 }
 
 function logic(){
-    camera_speed = core_input_keys[16]['state']
+    camera_speed = core_keys[16]['state']
       ? 10
       : 5;
 
-    if(core_input_keys[65]['state']){
+    if(core_keys[65]['state']){
         camera_x -= camera_speed;
         move_pillar(camera_speed);
     }
-    if(core_input_keys[68]['state']){
+    if(core_keys[68]['state']){
         camera_x += camera_speed;
         move_pillar(-camera_speed);
     }
-    if(core_input_keys[83]['state']){
+    if(core_keys[83]['state']){
         camera_y += camera_speed;
     }
-    if(core_input_keys[87]['state']){
+    if(core_keys[87]['state']){
         camera_y -= camera_speed;
     }
 
@@ -202,8 +202,7 @@ function randomize_fish_movement(fish_id){
 }
 
 function repo_init(){
-    canvas_init();
-    core_input_binds_add({
+    core_events_bind({
       'keybinds': {
         16: {},
         27: {
@@ -227,6 +226,7 @@ function repo_init(){
         87: {},
       },
     });
+    canvas_init();
 
     document.getElementById('canvas').style.background = '#004';
 
