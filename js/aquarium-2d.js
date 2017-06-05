@@ -201,15 +201,14 @@ function randomize_fish_movement(fish_id){
     }
 }
 
+function repo_escape(){
+    fish.length = 0;
+}
+
 function repo_init(){
     core_events_bind({
       'keybinds': {
         16: {},
-        27: {
-          'todo': function(){
-              fish.length = 0;
-          },
-        },
         65: {},
         68: {},
         70: {
