@@ -207,9 +207,6 @@ function repo_escape(){
 
 function repo_init(){
     core_repo_init({
-      'title': 'Aquarium-2D.htm',
-    });
-    core_events_bind({
       'keybinds': {
         16: {},
         65: {},
@@ -227,6 +224,7 @@ function repo_init(){
         83: {},
         87: {},
       },
+      'title': 'Aquarium-2D.htm',
     });
     canvas_init();
 
