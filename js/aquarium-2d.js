@@ -203,6 +203,7 @@ function randomize_fish_movement(fish_id){
 
 function repo_init(){
     core_repo_init({
+      'info': '<input onclick=canvas_setmode({newgame:true}) type=button value=Restart>',
       'keybinds': {
         16: {},
         65: {},
@@ -223,13 +224,6 @@ function repo_init(){
       'title': 'Aquarium-2D.htm',
     });
     canvas_init();
-
-    document.getElementById('canvas').style.background = '#004';
-
-    var loop_counter = 9;
-    do{
-        create_fish();
-    }while(loop_counter--);
 }
 
 function resize_logic(){
