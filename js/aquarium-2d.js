@@ -105,19 +105,6 @@ function draw_logic(){
 
     // Restore the buffer state.
     canvas_buffer.restore();
-
-    // Draw current camera position.
-    canvas_buffer.fillStyle = '#fff';
-    canvas_buffer.fillText(
-      camera_x + 'x ' + camera_y + 'y',
-      0,
-      25
-    );
-    canvas_buffer.fillText(
-      fish.length,
-      0,
-      50
-    );
 }
 
 function logic(){
@@ -160,6 +147,14 @@ function logic(){
             randomize_fish_movement(id);
         }
     }
+
+    core_ui_update({
+      'ids': {
+        'fish': fish.length,
+        'x': camera_x,
+        'y': camera_y,
+      },
+    });
 }
 
 function move_pillar(amount){
@@ -222,6 +217,7 @@ function repo_init(){
         87: {},
       },
       'title': 'Aquarium-2D.htm',
+      'ui': '<input id=ui-fish>Fish<br><input id=ui-x>X<br><input id=ui-y>Y',
     });
     canvas_init();
 }
