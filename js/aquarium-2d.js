@@ -83,7 +83,6 @@ function draw_logic(){
             },
             {
               'x': fish[id]['size'] * direction,
-              'y': 0,
             },
             {
               'x': fish[id]['size'] * 3 * direction,
@@ -91,7 +90,6 @@ function draw_logic(){
             },
             {
               'x': fish[id]['size'] * 3 * direction,
-              'y': 0,
             },
             {
               'x': fish[id]['size'] * direction,
