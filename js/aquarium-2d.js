@@ -23,18 +23,19 @@ function create_fish(){
         }) + 50;
     }
 
-
-    fish.push({
-      'angle': 0,
-      'color': '#' + core_random_hex(),
-      'dx': 0,
-      'dy': 0,
-      'size': fish_size,
-      'x': 0,
-      'y': 0,
+    var id = core_uid();
+    core_entity_create({
+      'id': id,
+      'properties': {
+        'color': '#' + core_random_hex(),
+        'size': fish_size,
+      },
+      'types': [
+        'fish',
+      ],
     });
 
-    randomize_fish_movement(fish.length - 1);
+    randomize_fish_movement(id);
 }
 
 function draw_logic(){
@@ -55,45 +56,44 @@ function draw_logic(){
       -camera_y
     );
 
-    for(var id in fish){
+    for(var entity in core_entities){
         canvas_buffer.save();
 
         // Translate and rotate fish.
         canvas_buffer.translate(
-          fish[id]['x'],
-          fish[id]['y']
+          core_entities[entity]['x'],
+          core_entities[entity]['y']
         );
-        canvas_buffer.rotate(fish[id]['angle']);
+        canvas_buffer.rotate(core_entities[entity]['angle']);
 
         // Determine movement direction based on dx.
-        var direction = fish[id]['dx'] > 0
+        var direction = core_entities[entity]['dx'] > 0
           ? 1
           : -1;
 
         // Draw fish.
         canvas_draw_path({
           'properties': {
-            'fillStyle': fish[id]['color'],
+            'fillStyle': core_entities[entity]['color'],
           },
           'vertices': [
             {
               'type': 'moveTo',
-              'x': 0,
-              'y': fish[id]['size'] / 2,
+              'y': core_entities[entity]['size'] / 2,
             },
             {
-              'x': fish[id]['size'] * direction,
+              'x': core_entities[entity]['size'] * direction,
             },
             {
-              'x': fish[id]['size'] * 3 * direction,
-              'y': fish[id]['size'],
+              'x': core_entities[entity]['size'] * 3 * direction,
+              'y': core_entities[entity]['size'],
             },
             {
-              'x': fish[id]['size'] * 3 * direction,
+              'x': core_entities[entity]['size'] * 3 * direction,
             },
             {
-              'x': fish[id]['size'] * direction,
-              'y': fish[id]['size'],
+              'x': core_entities[entity]['size'] * direction,
+              'y': core_entities[entity]['size'],
             },
           ],
         });
@@ -125,30 +125,30 @@ function logic(){
         camera_y -= camera_speed;
     }
 
-    for(var id in fish){
+    for(var entity in core_entities){
         // Fish move in the direction they are facing.
-        fish[id]['x'] -= fish[id]['dx'];
-        fish[id]['y'] -= fish[id]['dy'];
+        core_entities[entity]['x'] -= core_entities[entity]['dx'];
+        core_entities[entity]['y'] -= core_entities[entity]['dy'];
 
         // If a fish travels past the edge of the screen,
         //   move it to the other side.
-        var size = fish[id]['size'] * 4;
-        if(fish[id]['x'] > camera_x + canvas_width + size
-          || fish[id]['x'] < camera_x - size){
-            fish[id]['x'] += fish[id]['dx'] < 0
+        var size = core_entities[entity]['size'] * 4;
+        if(core_entities[entity]['x'] > camera_x + canvas_width + size
+          || core_entities[entity]['x'] < camera_x - size){
+            core_entities[entity]['x'] += core_entities[entity]['dx'] < 0
               ? -canvas_width - size
               : canvas_width + size;
-            fish[id]['y'] = camera_y + core_random_integer({
+            core_entities[entity]['y'] = camera_y + core_random_integer({
               'max': canvas_height,
             });
 
-            randomize_fish_movement(id);
+            randomize_fish_movement(entity);
         }
     }
 
     core_ui_update({
       'ids': {
-        'fish': fish.length,
+        //'fish': core_groups['fish'].length,
         'x': camera_x,
         'y': camera_y,
       },
@@ -166,31 +166,31 @@ function move_pillar(amount){
     }
 }
 
-function randomize_fish_movement(fish_id){
-    fish[fish_id]['dx'] = Math.random() * 10 - 5;
-    fish[fish_id]['dy'] = Math.random() * (fish[fish_id]['dx'] / 2) - fish[fish_id]['dx'] / 4;
-    fish[fish_id]['x'] = fish[fish_id]['dx'] < 0
-      ? camera_x - fish[fish_id]['size']
-      : camera_x + fish[fish_id]['size'] + canvas_width;
-    fish[fish_id]['y'] = camera_y + core_random_integer({
+function randomize_fish_movement(id){
+    core_entities[id]['dx'] = Math.random() * 10 - 5;
+    core_entities[id]['dy'] = Math.random() * (core_entities[id]['dx'] / 2) - core_entities[id]['dx'] / 4;
+    core_entities[id]['x'] = core_entities[id]['dx'] < 0
+      ? camera_x - core_entities[id]['size']
+      : camera_x + core_entities[id]['size'] + canvas_width;
+    core_entities[id]['y'] = camera_y + core_random_integer({
       'max': canvas_height,
     });
 
-    fish[fish_id]['angle'] = math_move_2d({
-      'x0': fish[fish_id]['x'],
-      'x1': fish[fish_id]['x'] + fish[fish_id]['dx'],
-      'y0': fish[fish_id]['y'],
-      'y1': fish[fish_id]['y'] + fish[fish_id]['dy'],
+    core_entities[id]['angle'] = math_move_2d({
+      'x0': core_entities[id]['x'],
+      'x1': core_entities[id]['x'] + core_entities[id]['dx'],
+      'y0': core_entities[id]['y'],
+      'y1': core_entities[id]['y'] + core_entities[id]['dy'],
     })['angle'];
 
-    if(fish[fish_id]['dx'] > 0
-      || fish[fish_id]['dy'] > 0){
-        fish[fish_id]['angle'] *= -1;
+    if(core_entities[id]['dx'] > 0
+      || core_entities[id]['dy'] > 0){
+        core_entities[id]['angle'] *= -1;
     }
 
-    if(fish[fish_id]['dx'] > 0
-      && fish[fish_id]['dy'] > 0){
-        fish[fish_id]['angle'] *= -1;
+    if(core_entities[id]['dx'] > 0
+      && core_entities[id]['dy'] > 0){
+        core_entities[id]['angle'] *= -1;
     }
 }
 
@@ -217,6 +217,16 @@ function repo_init(){
       'title': 'Aquarium-2D.htm',
       'ui': '<span id=ui-fish></span> Fish<br><span id=ui-x></span>x, <span id=ui-y></span>y',
     });
+
+    core_entity_set({
+      'properties': {
+        'angle': 0,
+        'dx': 0,
+        'dy': 0,
+      },
+      'type': 'fish',
+    });
+
     canvas_init();
 }
 
@@ -229,5 +239,4 @@ function resize_logic(){
 var camera_speed = 5;
 var camera_x = 0;
 var camera_y = 0;
-var fish = [];
 var pillar = 0;
