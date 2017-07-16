@@ -39,24 +39,30 @@ function create_fish(){
 }
 
 function draw_logic(){
-    canvas_buffer.fillStyle = '#003';
-    canvas_buffer.fillRect(
-      pillar,
-      0,
-      100,
-      canvas_height
-    );
-
     // Save the current buffer state.
     canvas_buffer.save();
+    canvas_buffer.translate(
+      -camera_x,
+      0
+    );
+
+    canvas_buffer.fillStyle = '#003';
+    for(var entity in core_groups['_pillar']){
+        canvas_buffer.fillRect(
+          core_entities[entity]['x'],
+          0,
+          100,
+          canvas_height
+        );
+    }
 
     // Draw stuff relative to center of canvas.
     canvas_buffer.translate(
-      -camera_x,
+      0,
       -camera_y
     );
 
-    for(var entity in core_entities){
+    for(entity in core_entities){
         canvas_buffer.save();
 
         // Translate and rotate fish.
@@ -112,11 +118,9 @@ function logic(){
 
     if(core_keys[65]['state']){
         camera_x -= camera_speed;
-        move_pillar(camera_speed);
     }
     if(core_keys[68]['state']){
         camera_x += camera_speed;
-        move_pillar(-camera_speed);
     }
     if(core_keys[83]['state']){
         camera_y += camera_speed;
@@ -125,7 +129,7 @@ function logic(){
         camera_y -= camera_speed;
     }
 
-    for(var entity in core_entities){
+    for(var entity in core_groups['_fish']){
         // Fish move in the direction they are facing.
         core_entities[entity]['x'] -= core_entities[entity]['dx'];
         core_entities[entity]['y'] -= core_entities[entity]['dy'];
@@ -153,17 +157,6 @@ function logic(){
         'y': camera_y,
       },
     });
-}
-
-function move_pillar(amount){
-    pillar += amount;
-
-    if(pillar > canvas_width){
-        pillar -= canvas_width + 100;
-
-    }else if(pillar < -100){
-        pillar += canvas_width + 100;
-    }
 }
 
 function randomize_fish_movement(id){
@@ -206,7 +199,6 @@ function repo_init(){
         },
         72: {
           'todo': function(){
-              move_pillar(camera_x);
               camera_x = 0;
               camera_y = 0;
           },
@@ -226,17 +218,13 @@ function repo_init(){
       },
       'type': 'fish',
     });
+    core_entity_set({
+      'type': 'pillar',
+    });
 
     canvas_init();
-}
-
-function resize_logic(){
-    move_pillar(core_random_integer({
-      'max': canvas_width,
-    }));
 }
 
 var camera_speed = 5;
 var camera_x = 0;
 var camera_y = 0;
-var pillar = 0;

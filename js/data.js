@@ -10,4 +10,15 @@ function load_data(id){
     do{
         create_fish();
     }while(loop_counter--);
+
+    core_entity_create({
+      'properties': {
+        'x': core_random_integer({
+          'max': canvas_width,
+        }),
+      },
+      'types': [
+        'pillar',
+      ],
+    });
 }
