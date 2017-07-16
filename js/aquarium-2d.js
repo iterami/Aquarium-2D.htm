@@ -47,14 +47,19 @@ function draw_logic(){
     );
 
     canvas_buffer.fillStyle = '#003';
-    for(var entity in core_groups['_pillar']){
-        canvas_buffer.fillRect(
-          core_entities[entity]['x'],
-          0,
-          100,
-          canvas_height
-        );
-    }
+    core_group_modify({
+      'groups': [
+        '_pillar',
+      ],
+      'todo': function(entity){
+          canvas_buffer.fillRect(
+            core_entities[entity]['x'],
+            0,
+            100,
+            canvas_height
+          );
+      },
+    });
 
     // Draw stuff relative to center of canvas.
     canvas_buffer.translate(
@@ -62,50 +67,55 @@ function draw_logic(){
       -camera_y
     );
 
-    for(entity in core_entities){
-        canvas_buffer.save();
+    core_group_modify({
+      'groups': [
+        '_fish',
+      ],
+      'todo': function(entity){
+          canvas_buffer.save();
 
-        // Translate and rotate fish.
-        canvas_buffer.translate(
-          core_entities[entity]['x'],
-          core_entities[entity]['y']
-        );
-        canvas_buffer.rotate(core_entities[entity]['angle']);
+          // Translate and rotate fish.
+          canvas_buffer.translate(
+            core_entities[entity]['x'],
+            core_entities[entity]['y']
+          );
+          canvas_buffer.rotate(core_entities[entity]['angle']);
 
-        // Determine movement direction based on dx.
-        var direction = core_entities[entity]['dx'] > 0
-          ? 1
-          : -1;
+          // Determine movement direction based on dx.
+          var direction = core_entities[entity]['dx'] > 0
+            ? 1
+            : -1;
 
-        // Draw fish.
-        canvas_draw_path({
-          'properties': {
-            'fillStyle': core_entities[entity]['color'],
-          },
-          'vertices': [
-            {
-              'type': 'moveTo',
-              'y': core_entities[entity]['size'] / 2,
+          // Draw fish.
+          canvas_draw_path({
+            'properties': {
+              'fillStyle': core_entities[entity]['color'],
             },
-            {
-              'x': core_entities[entity]['size'] * direction,
-            },
-            {
-              'x': core_entities[entity]['size'] * 3 * direction,
-              'y': core_entities[entity]['size'],
-            },
-            {
-              'x': core_entities[entity]['size'] * 3 * direction,
-            },
-            {
-              'x': core_entities[entity]['size'] * direction,
-              'y': core_entities[entity]['size'],
-            },
-          ],
-        });
+            'vertices': [
+              {
+                'type': 'moveTo',
+                'y': core_entities[entity]['size'] / 2,
+              },
+              {
+                'x': core_entities[entity]['size'] * direction,
+              },
+              {
+                'x': core_entities[entity]['size'] * 3 * direction,
+                'y': core_entities[entity]['size'],
+              },
+              {
+                'x': core_entities[entity]['size'] * 3 * direction,
+              },
+              {
+                'x': core_entities[entity]['size'] * direction,
+                'y': core_entities[entity]['size'],
+              },
+            ],
+          });
 
-        canvas_buffer.restore();
-    }
+          canvas_buffer.restore();
+      },
+    });
 
     // Restore the buffer state.
     canvas_buffer.restore();
@@ -129,26 +139,31 @@ function logic(){
         camera_y -= camera_speed;
     }
 
-    for(var entity in core_groups['_fish']){
-        // Fish move in the direction they are facing.
-        core_entities[entity]['x'] -= core_entities[entity]['dx'];
-        core_entities[entity]['y'] -= core_entities[entity]['dy'];
+    core_group_modify({
+      'groups': [
+        '_fish',
+      ],
+      'todo': function(entity){
+          // Fish move in the direction they are facing.
+          core_entities[entity]['x'] -= core_entities[entity]['dx'];
+          core_entities[entity]['y'] -= core_entities[entity]['dy'];
 
-        // If a fish travels past the edge of the screen,
-        //   move it to the other side.
-        var size = core_entities[entity]['size'] * 4;
-        if(core_entities[entity]['x'] > camera_x + canvas_width + size
-          || core_entities[entity]['x'] < camera_x - size){
-            core_entities[entity]['x'] += core_entities[entity]['dx'] < 0
-              ? -canvas_width - size
-              : canvas_width + size;
-            core_entities[entity]['y'] = camera_y + core_random_integer({
-              'max': canvas_height,
-            });
+          // If a fish travels past the edge of the screen,
+          //   move it to the other side.
+          var size = core_entities[entity]['size'] * 4;
+          if(core_entities[entity]['x'] > camera_x + canvas_width + size
+            || core_entities[entity]['x'] < camera_x - size){
+              core_entities[entity]['x'] += core_entities[entity]['dx'] < 0
+                ? -canvas_width - size
+                : canvas_width + size;
+              core_entities[entity]['y'] = camera_y + core_random_integer({
+                'max': canvas_height,
+              });
 
-            randomize_fish_movement(entity);
-        }
-    }
+              randomize_fish_movement(entity);
+          }
+      },
+    });
 
     core_ui_update({
       'ids': {
