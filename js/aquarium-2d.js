@@ -122,21 +122,17 @@ function draw_logic(){
 }
 
 function logic(){
-    camera_speed = core_keys[16]['state']
-      ? 10
-      : 5;
-
     if(core_keys[65]['state']){
-        camera_x -= camera_speed;
+        camera_x -= core_storage_data['camera-speed'];
     }
     if(core_keys[68]['state']){
-        camera_x += camera_speed;
+        camera_x += core_storage_data['camera-speed'];
     }
     if(core_keys[83]['state']){
-        camera_y += camera_speed;
+        camera_y += core_storage_data['camera-speed'];
     }
     if(core_keys[87]['state']){
-        camera_y -= camera_speed;
+        camera_y -= core_storage_data['camera-speed'];
     }
 
     core_group_modify({
@@ -221,6 +217,10 @@ function repo_init(){
         83: {},
         87: {},
       },
+      'storage': {
+        'camera-speed': 5,
+      },
+      'storage-menu': '<table><tr><td><input id=camera-speed><td>Camera Speed</table>',
       'title': 'Aquarium-2D.htm',
       'ui': '<span id=ui-fish></span> Fish<br><span id=ui-x></span>x, <span id=ui-y></span>y',
     });
@@ -240,6 +240,5 @@ function repo_init(){
     canvas_init();
 }
 
-var camera_speed = 5;
 var camera_x = 0;
 var camera_y = 0;
