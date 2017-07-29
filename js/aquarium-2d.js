@@ -11,7 +11,7 @@ function draw_logic(){
     canvas_buffer.fillStyle = '#003';
     core_group_modify({
       'groups': [
-        '_pillar',
+        'pillar',
       ],
       'todo': function(entity){
           canvas_buffer.fillRect(
@@ -31,7 +31,7 @@ function draw_logic(){
 
     core_group_modify({
       'groups': [
-        '_fish',
+        'fish',
       ],
       'todo': function(entity){
           canvas_buffer.save();
@@ -99,7 +99,7 @@ function logic(){
 
     core_group_modify({
       'groups': [
-        '_fish',
+        'fish',
       ],
       'todo': function(entity){
           // Fish move in the direction they are facing.
@@ -134,6 +134,16 @@ function logic(){
 
 function repo_init(){
     core_repo_init({
+      'entities': {
+        'fish': {
+          'properties': {
+            'angle': 0,
+            'dx': 0,
+            'dy': 0,
+          },
+        },
+        'pillar': {},
+      },
       'info': '<input onclick=canvas_setmode({newgame:true}) type=button value=Restart>',
       'keybinds': {
         16: {},
@@ -158,19 +168,6 @@ function repo_init(){
       'title': 'Aquarium-2D.htm',
       'ui': '<span id=ui-fish></span> Fish<br><span id=ui-x></span>x, <span id=ui-y></span>y',
     });
-
-    core_entity_set({
-      'properties': {
-        'angle': 0,
-        'dx': 0,
-        'dy': 0,
-      },
-      'type': 'fish',
-    });
-    core_entity_set({
-      'type': 'pillar',
-    });
-
     canvas_init();
 }
 
