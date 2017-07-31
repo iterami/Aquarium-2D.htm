@@ -43,10 +43,10 @@ function draw_logic(){
           );
           canvas_buffer.rotate(core_entities[entity]['angle']);
 
-          // Determine movement direction based on dx.
-          var direction = core_entities[entity]['dx'] > 0
+          // Calculate vertex based on movement direction.
+          var xoffset = core_entities[entity]['size'] * (core_entities[entity]['dx'] > 0
             ? 1
-            : -1;
+            : -1);
 
           // Draw fish.
           canvas_draw_path({
@@ -59,17 +59,17 @@ function draw_logic(){
                 'y': core_entities[entity]['size'] / 2,
               },
               {
-                'x': core_entities[entity]['size'] * direction,
+                'x': xoffset,
               },
               {
-                'x': core_entities[entity]['size'] * 3 * direction,
+                'x': xoffset * 3,
                 'y': core_entities[entity]['size'],
               },
               {
-                'x': core_entities[entity]['size'] * 3 * direction,
+                'x': xoffset * 3,
               },
               {
-                'x': core_entities[entity]['size'] * direction,
+                'x': xoffset,
                 'y': core_entities[entity]['size'],
               },
             ],
