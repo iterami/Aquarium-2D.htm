@@ -125,7 +125,7 @@ function logic(){
 
     core_ui_update({
       'ids': {
-        //'fish': core_groups['fish'].length,
+        'fish': core_entity_info['fish']['count'],
         'x': camera_x,
         'y': camera_y,
       },
