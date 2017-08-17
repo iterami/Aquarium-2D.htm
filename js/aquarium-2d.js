@@ -8,7 +8,11 @@ function draw_logic(){
       0
     );
 
-    canvas_buffer.fillStyle = '#003';
+    canvas_setproperties({
+      'properties': {
+        'fillStyle': '#003',
+      },
+    });
     core_group_modify({
       'groups': [
         'pillar',
