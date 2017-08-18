@@ -148,7 +148,17 @@ function repo_init(){
         },
         'pillar': {},
       },
-      'info': '<input onclick=canvas_setmode({newgame:true}) type=button value=Restart>',
+      'info': '<input id=restart type=button value=Restart>',
+      'info-events': {
+        'restart': {
+          'todo': function(){
+              canvas_setmode({
+                'newgame': true,
+              });
+          },
+          'type': 'onclick',
+        },
+      },
       'keybinds': {
         16: {},
         65: {},
