@@ -52,7 +52,7 @@ function load_data(id){
     core_entity_create({
       'properties': {
         'x': core_random_integer({
-          'max': canvas_width,
+          'max': canvas_properties['width'],
         }),
       },
       'types': [
@@ -66,9 +66,9 @@ function randomize_fish_movement(id){
     core_entities[id]['dy'] = Math.random() * (core_entities[id]['dx'] / 2) - core_entities[id]['dx'] / 4;
     core_entities[id]['x'] = core_entities[id]['dx'] < 0
       ? camera_x - core_entities[id]['size']
-      : camera_x + core_entities[id]['size'] + canvas_width;
+      : camera_x + core_entities[id]['size'] + canvas_properties['width'];
     core_entities[id]['y'] = camera_y + core_random_integer({
-      'max': canvas_height,
+      'max': canvas_properties['height'],
     });
 
     core_entities[id]['angle'] = math_move_2d({

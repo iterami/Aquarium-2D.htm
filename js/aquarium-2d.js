@@ -22,7 +22,7 @@ function draw_logic(){
             core_entities[entity]['x'],
             0,
             100,
-            canvas_height
+            canvas_properties['height']
           );
       },
     });
@@ -113,13 +113,13 @@ function logic(){
           // If a fish travels past the edge of the screen,
           //   move it to the other side.
           var size = core_entities[entity]['size'] * 4;
-          if(core_entities[entity]['x'] > camera_x + canvas_width + size
+          if(core_entities[entity]['x'] > camera_x + canvas_properties['width'] + size
             || core_entities[entity]['x'] < camera_x - size){
               core_entities[entity]['x'] += core_entities[entity]['dx'] < 0
-                ? -canvas_width - size
-                : canvas_width + size;
+                ? -canvas_properties['width'] - size
+                : canvas_properties['width'] + size;
               core_entities[entity]['y'] = camera_y + core_random_integer({
-                'max': canvas_height,
+                'max': canvas_properties['height'],
               });
 
               randomize_fish_movement(entity);
