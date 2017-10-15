@@ -41,9 +41,6 @@ function create_fish(){
 function load_data(id){
     document.getElementById('canvas').style.background = '#004';
 
-    camera_x = 0;
-    camera_y = 0;
-
     var loop_counter = 9;
     do{
         create_fish();
@@ -65,9 +62,9 @@ function randomize_fish_movement(id){
     core_entities[id]['dx'] = Math.random() * 10 - 5;
     core_entities[id]['dy'] = Math.random() * (core_entities[id]['dx'] / 2) - core_entities[id]['dx'] / 4;
     core_entities[id]['x'] = core_entities[id]['dx'] < 0
-      ? camera_x - core_entities[id]['size']
-      : camera_x + core_entities[id]['size'] + canvas_properties['width'];
-    core_entities[id]['y'] = camera_y + core_random_integer({
+      ? -core_entities[id]['size']
+      : core_entities[id]['size'] + canvas_properties['width'];
+    core_entities[id]['y'] = core_random_integer({
       'max': canvas_properties['height'],
     });
 

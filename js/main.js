@@ -1,13 +1,6 @@
 'use strict';
 
 function draw_logic(){
-    // Save the current buffer state.
-    canvas_buffer.save();
-    canvas_buffer.translate(
-      -camera_x,
-      0
-    );
-
     canvas_setproperties({
       'properties': {
         'fillStyle': '#003',
@@ -26,12 +19,6 @@ function draw_logic(){
           );
       },
     });
-
-    // Draw stuff relative to center of canvas.
-    canvas_buffer.translate(
-      0,
-      -camera_y
-    );
 
     core_group_modify({
       'groups': [
@@ -82,25 +69,9 @@ function draw_logic(){
           canvas_buffer.restore();
       },
     });
-
-    // Restore the buffer state.
-    canvas_buffer.restore();
 }
 
 function logic(){
-    if(core_keys[65]['state']){
-        camera_x -= core_storage_data['camera-speed'];
-    }
-    if(core_keys[68]['state']){
-        camera_x += core_storage_data['camera-speed'];
-    }
-    if(core_keys[83]['state']){
-        camera_y += core_storage_data['camera-speed'];
-    }
-    if(core_keys[87]['state']){
-        camera_y -= core_storage_data['camera-speed'];
-    }
-
     core_group_modify({
       'groups': [
         'fish',
@@ -113,12 +84,12 @@ function logic(){
           // If a fish travels past the edge of the screen,
           //   move it to the other side.
           var size = core_entities[entity]['size'] * 4;
-          if(core_entities[entity]['x'] > camera_x + canvas_properties['width'] + size
-            || core_entities[entity]['x'] < camera_x - size){
+          if(core_entities[entity]['x'] > canvas_properties['width'] + size
+            || core_entities[entity]['x'] < -size){
               core_entities[entity]['x'] += core_entities[entity]['dx'] < 0
                 ? -canvas_properties['width'] - size
                 : canvas_properties['width'] + size;
-              core_entities[entity]['y'] = camera_y + core_random_integer({
+              core_entities[entity]['y'] = core_random_integer({
                 'max': canvas_properties['height'],
               });
 
@@ -130,8 +101,6 @@ function logic(){
     core_ui_update({
       'ids': {
         'fish': core_entity_info['fish']['count'],
-        'x': camera_x,
-        'y': camera_y,
       },
     });
 }
@@ -160,29 +129,12 @@ function repo_init(){
       },
       'keybinds': {
         16: {},
-        65: {},
-        68: {},
         70: {
           'todo': create_fish,
         },
-        72: {
-          'todo': function(){
-              camera_x = 0;
-              camera_y = 0;
-          },
-        },
-        83: {},
-        87: {},
       },
-      'storage': {
-        'camera-speed': 5,
-      },
-      'storage-menu': '<table><tr><td><input id=camera-speed><td>Camera Speed</table>',
       'title': 'Aquarium-2D.htm',
       'ui': '<span id=ui-fish></span> Fish<br><span id=ui-x></span>x, <span id=ui-y></span>y',
     });
     canvas_init();
 }
-
-var camera_x = 0;
-var camera_y = 0;
