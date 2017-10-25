@@ -117,16 +117,16 @@ function repo_init(){
         },
         'pillar': {},
       },
-      'info': '<input id=restart type=button value=Restart>',
-      'info-events': {
+      'events': {
         'restart': {
-          'todo': function(){
+          'onclick': function(){
               canvas_setmode({
                 'newgame': true,
               });
           },
         },
       },
+      'info': '<input id=restart type=button value=Restart>',
       'keybinds': {
         16: {},
         70: {
