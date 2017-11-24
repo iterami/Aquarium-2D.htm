@@ -39,8 +39,6 @@ function create_fish(){
 }
 
 function load_data(id){
-    document.getElementById('canvas').style.background = '#004';
-
     var loop_counter = 9;
     do{
         create_fish();

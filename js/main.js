@@ -137,4 +137,6 @@ function repo_init(){
       'ui': '<span id=ui-fish></span> Fish',
     });
     canvas_init();
+
+    canvas_properties['clearColor'] = '#004';
 }
