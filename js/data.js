@@ -66,7 +66,7 @@ function randomize_fish_movement(id){
       'max': canvas_properties['height'],
     });
 
-    core_entities[id]['angle'] = math_move_2d({
+    core_entities[id]['angle'] = core_move_2d({
       'x0': core_entities[id]['x'],
       'x1': core_entities[id]['x'] + core_entities[id]['dx'],
       'y0': core_entities[id]['y'],
