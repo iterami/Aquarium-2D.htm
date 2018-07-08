@@ -2,7 +2,7 @@
 
 function create_fish(){
     // Determine fish size.
-    var fish_size = Math.random();
+    let fish_size = Math.random();
 
     // Chance to be normal sized fish...
     if(fish_size < .6){
@@ -23,7 +23,7 @@ function create_fish(){
         }) + 50;
     }
 
-    var id = core_uid();
+    let id = core_uid();
     core_entity_create({
       'id': id,
       'properties': {
@@ -39,7 +39,7 @@ function create_fish(){
 }
 
 function load_data(id){
-    var loop_counter = 9;
+    let loop_counter = 9;
     do{
         create_fish();
     }while(loop_counter--);
