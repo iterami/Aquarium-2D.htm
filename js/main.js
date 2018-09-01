@@ -134,7 +134,7 @@ function repo_init(){
         },
       },
       'title': 'Aquarium-2D.htm',
-      'ui': '<span id=ui-fish></span> Fish',
+      'ui': '<span id=fish></span> Fish',
     });
     canvas_init();
 
