@@ -123,6 +123,7 @@ function repo_init(){
               canvas_setmode({
                 'newgame': true,
               });
+              core_entity_info['fish']['count'] = 10;
           },
         },
       },

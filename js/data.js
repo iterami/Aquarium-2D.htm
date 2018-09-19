@@ -23,7 +23,7 @@ function create_fish(){
         }) + 50;
     }
 
-    let id = core_uid();
+    let id = core_entity_info['fish']['count'];
     core_entity_create({
       'id': id,
       'properties': {
@@ -45,6 +45,7 @@ function load_data(id){
     }while(loop_counter--);
 
     core_entity_create({
+      'id': 'pillar',
       'properties': {
         'x': core_random_integer({
           'max': canvas_properties['width'],
