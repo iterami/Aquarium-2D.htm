@@ -23,9 +23,7 @@ function create_fish(){
         }) + 50;
     }
 
-    let id = core_entity_info['fish']['count'];
-    core_entity_create({
-      'id': id,
+    randomize_fish_movement(core_entity_create({
       'properties': {
         'color': '#' + core_random_hex(),
         'size': fish_size,
@@ -33,9 +31,7 @@ function create_fish(){
       'types': [
         'fish',
       ],
-    });
-
-    randomize_fish_movement(id);
+    }));
 }
 
 function load_data(id){
