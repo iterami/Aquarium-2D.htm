@@ -118,6 +118,9 @@ function repo_init(){
         'pillar': {},
       },
       'events': {
+        'add-fish': {
+          'onclick': create_fish,
+        },
         'restart': {
           'onclick': function(){
               canvas_setmode({
@@ -127,7 +130,7 @@ function repo_init(){
           },
         },
       },
-      'info': '<input id=restart type=button value=Restart>',
+      'info': '<input id=add-fish type=button value="Add Fish [F]"><input id=restart type=button value=Restart>',
       'keybinds': {
         16: {},
         70: {
