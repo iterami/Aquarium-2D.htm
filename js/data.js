@@ -23,7 +23,7 @@ function create_fish(){
         }) + 50;
     }
 
-    randomize_fish_movement(core_entity_create({
+    randomize_fish_movement(entity_create({
       'properties': {
         'color': '#' + core_random_hex(),
         'size': fish_size,
@@ -40,7 +40,7 @@ function load_data(id){
         create_fish();
     }while(loop_counter--);
 
-    core_entity_create({
+    entity_create({
       'id': 'pillar',
       'properties': {
         'x': core_random_integer({
@@ -54,29 +54,29 @@ function load_data(id){
 }
 
 function randomize_fish_movement(id){
-    core_entities[id]['dx'] = Math.random() * 10 - 5;
-    core_entities[id]['dy'] = Math.random() * (core_entities[id]['dx'] / 2) - core_entities[id]['dx'] / 4;
-    core_entities[id]['x'] = core_entities[id]['dx'] < 0
-      ? -core_entities[id]['size']
-      : core_entities[id]['size'] + canvas_properties['width'];
-    core_entities[id]['y'] = core_random_integer({
+    entity_entities[id]['dx'] = Math.random() * 10 - 5;
+    entity_entities[id]['dy'] = Math.random() * (entity_entities[id]['dx'] / 2) - entity_entities[id]['dx'] / 4;
+    entity_entities[id]['x'] = entity_entities[id]['dx'] < 0
+      ? -entity_entities[id]['size']
+      : entity_entities[id]['size'] + canvas_properties['width'];
+    entity_entities[id]['y'] = core_random_integer({
       'max': canvas_properties['height'],
     });
 
-    core_entities[id]['angle'] = math_move_2d({
-      'x0': core_entities[id]['x'],
-      'x1': core_entities[id]['x'] + core_entities[id]['dx'],
-      'y0': core_entities[id]['y'],
-      'y1': core_entities[id]['y'] + core_entities[id]['dy'],
+    entity_entities[id]['angle'] = math_move_2d({
+      'x0': entity_entities[id]['x'],
+      'x1': entity_entities[id]['x'] + entity_entities[id]['dx'],
+      'y0': entity_entities[id]['y'],
+      'y1': entity_entities[id]['y'] + entity_entities[id]['dy'],
     })['angle'];
 
-    if(core_entities[id]['dx'] > 0
-      || core_entities[id]['dy'] > 0){
-        core_entities[id]['angle'] *= -1;
+    if(entity_entities[id]['dx'] > 0
+      || entity_entities[id]['dy'] > 0){
+        entity_entities[id]['angle'] *= -1;
     }
 
-    if(core_entities[id]['dx'] > 0
-      && core_entities[id]['dy'] > 0){
-        core_entities[id]['angle'] *= -1;
+    if(entity_entities[id]['dx'] > 0
+      && entity_entities[id]['dy'] > 0){
+        entity_entities[id]['angle'] *= -1;
     }
 }

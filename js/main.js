@@ -6,13 +6,13 @@ function draw_logic(){
         'fillStyle': '#003',
       },
     });
-    core_group_modify({
+    entity_group_modify({
       'groups': [
         'pillar',
       ],
       'todo': function(entity){
           canvas_buffer.fillRect(
-            core_entities[entity]['x'],
+            entity_entities[entity]['x'],
             0,
             100,
             canvas_properties['height']
@@ -20,7 +20,7 @@ function draw_logic(){
       },
     });
 
-    core_group_modify({
+    entity_group_modify({
       'groups': [
         'fish',
       ],
@@ -29,39 +29,39 @@ function draw_logic(){
 
           // Translate and rotate fish.
           canvas_buffer.translate(
-            core_entities[entity]['x'],
-            core_entities[entity]['y']
+            entity_entities[entity]['x'],
+            entity_entities[entity]['y']
           );
-          canvas_buffer.rotate(core_entities[entity]['angle']);
+          canvas_buffer.rotate(entity_entities[entity]['angle']);
 
           // Calculate vertex based on movement direction.
-          let xoffset = core_entities[entity]['size'] * (core_entities[entity]['dx'] > 0
+          let xoffset = entity_entities[entity]['size'] * (entity_entities[entity]['dx'] > 0
             ? 1
             : -1);
 
           // Draw fish.
           canvas_draw_path({
             'properties': {
-              'fillStyle': core_entities[entity]['color'],
+              'fillStyle': entity_entities[entity]['color'],
             },
             'vertices': [
               {
                 'type': 'moveTo',
-                'y': core_entities[entity]['size'] / 2,
+                'y': entity_entities[entity]['size'] / 2,
               },
               {
                 'x': xoffset,
               },
               {
                 'x': xoffset * 3,
-                'y': core_entities[entity]['size'],
+                'y': entity_entities[entity]['size'],
               },
               {
                 'x': xoffset * 3,
               },
               {
                 'x': xoffset,
-                'y': core_entities[entity]['size'],
+                'y': entity_entities[entity]['size'],
               },
             ],
           });
@@ -72,24 +72,24 @@ function draw_logic(){
 }
 
 function logic(){
-    core_group_modify({
+    entity_group_modify({
       'groups': [
         'fish',
       ],
       'todo': function(entity){
           // Fish move in the direction they are facing.
-          core_entities[entity]['x'] -= core_entities[entity]['dx'];
-          core_entities[entity]['y'] -= core_entities[entity]['dy'];
+          entity_entities[entity]['x'] -= entity_entities[entity]['dx'];
+          entity_entities[entity]['y'] -= entity_entities[entity]['dy'];
 
           // If a fish travels past the edge of the screen,
           //   move it to the other side.
-          let size = core_entities[entity]['size'] * 4;
-          if(core_entities[entity]['x'] > canvas_properties['width'] + size
-            || core_entities[entity]['x'] < -size){
-              core_entities[entity]['x'] += core_entities[entity]['dx'] < 0
+          let size = entity_entities[entity]['size'] * 4;
+          if(entity_entities[entity]['x'] > canvas_properties['width'] + size
+            || entity_entities[entity]['x'] < -size){
+              entity_entities[entity]['x'] += entity_entities[entity]['dx'] < 0
                 ? -canvas_properties['width'] - size
                 : canvas_properties['width'] + size;
-              core_entities[entity]['y'] = core_random_integer({
+              entity_entities[entity]['y'] = core_random_integer({
                 'max': canvas_properties['height'],
               });
 
@@ -100,7 +100,7 @@ function logic(){
 
     core_ui_update({
       'ids': {
-        'fish': core_entity_info['fish']['count'],
+        'fish': entity_info['fish']['count'],
       },
     });
 }
@@ -126,7 +126,7 @@ function repo_init(){
               canvas_setmode({
                 'newgame': true,
               });
-              core_entity_info['fish']['count'] = 10;
+              entity_info['fish']['count'] = 10;
           },
         },
       },
@@ -139,6 +139,17 @@ function repo_init(){
       },
       'title': 'Aquarium-2D.htm',
       'ui': '<span id=fish></span> Fish',
+    });
+    entity_set({
+      'type': 'pillar',
+    });
+    entity_set({
+      'properties': {
+        'angle': 0,
+        'dx': 0,
+        'dy': 0,
+      },
+      'type': 'fish',
     });
     canvas_init();
 
