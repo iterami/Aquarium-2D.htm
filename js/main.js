@@ -122,21 +122,16 @@ function repo_init(){
           'onclick': create_fish,
         },
         'restart': {
-          'onclick': function(){
-              canvas_setmode({
-                'newgame': true,
-              });
-              entity_info['fish']['count'] = 10;
-          },
+          'onclick': core_repo_reset,
         },
       },
       'info': '<input id=add-fish type=button value="Add Fish [F]"><input id=restart type=button value=Restart>',
       'keybinds': {
-        16: {},
         70: {
           'todo': create_fish,
         },
       },
+      'reset': canvas_setmode,
       'title': 'Aquarium-2D.htm',
       'ui': '<span id=fish></span> Fish',
     });
