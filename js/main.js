@@ -35,7 +35,7 @@ function draw_logic(){
           canvas_buffer.rotate(entity_entities[entity]['angle']);
 
           // Calculate vertex based on movement direction.
-          let xoffset = entity_entities[entity]['size'] * (entity_entities[entity]['dx'] > 0
+          const xoffset = entity_entities[entity]['size'] * (entity_entities[entity]['dx'] > 0
             ? 1
             : -1);
 
@@ -83,7 +83,7 @@ function logic(){
 
           // If a fish travels past the edge of the screen,
           //   move it to the other side.
-          let size = entity_entities[entity]['size'] * 4;
+          const size = entity_entities[entity]['size'] * 4;
           if(entity_entities[entity]['x'] > canvas_properties['width'] + size
             || entity_entities[entity]['x'] < -size){
               entity_entities[entity]['x'] += entity_entities[entity]['dx'] < 0
