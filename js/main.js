@@ -1,6 +1,6 @@
 'use strict';
 
-function draw_logic(){
+function repo_drawlogic(){
     canvas_setproperties({
       'properties': {
         'fillStyle': '#003',
@@ -71,7 +71,7 @@ function draw_logic(){
     });
 }
 
-function logic(){
+function repo_logic(){
     entity_group_modify({
       'groups': [
         'fish',
