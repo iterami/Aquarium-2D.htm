@@ -1,22 +1,18 @@
 'use strict';
 
 function create_fish(){
-    // Determine fish size.
     let fish_size = Math.random();
 
-    // Chance to be normal sized fish...
     if(fish_size < .6){
         fish_size = core_random_integer({
           'max': 25,
         }) + 25;
 
-    // ...or chance to be a small fish...
     }else if(fish_size < .88){
         fish_size = core_random_integer({
           'max': 10,
         }) + 5;
 
-    // ...else is a giant fish.
     }else{
         fish_size = core_random_integer({
           'max': 500,

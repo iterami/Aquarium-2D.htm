@@ -26,20 +26,16 @@ function repo_drawlogic(){
       ],
       'todo': function(entity){
           canvas_buffer.save();
-
-          // Translate and rotate fish.
           canvas_buffer.translate(
             entity_entities[entity]['x'],
             entity_entities[entity]['y']
           );
           canvas_buffer.rotate(entity_entities[entity]['angle']);
 
-          // Calculate vertex based on movement direction.
           const xoffset = entity_entities[entity]['size'] * (entity_entities[entity]['dx'] > 0
             ? 1
             : -1);
 
-          // Draw fish.
           canvas_draw_path({
             'properties': {
               'fillStyle': entity_entities[entity]['color'],
@@ -77,12 +73,9 @@ function repo_logic(){
         'fish',
       ],
       'todo': function(entity){
-          // Fish move in the direction they are facing.
           entity_entities[entity]['x'] -= entity_entities[entity]['dx'];
           entity_entities[entity]['y'] -= entity_entities[entity]['dy'];
 
-          // If a fish travels past the edge of the screen,
-          //   move it to the other side.
           const size = entity_entities[entity]['size'] * 4;
           if(entity_entities[entity]['x'] > canvas_properties['width'] + size
             || entity_entities[entity]['x'] < -size){
