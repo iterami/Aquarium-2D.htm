@@ -65,15 +65,8 @@ function randomize_fish_movement(id){
       'y0': entity_entities[id]['y'],
       'y1': entity_entities[id]['y'] + entity_entities[id]['dy'],
     })['angle'];
-
-    if(entity_entities[id]['dx'] > 0
-      || entity_entities[id]['dy'] > 0){
-        entity_entities[id]['angle'] *= -1;
-    }
-
-    if(entity_entities[id]['dx'] > 0
-      && entity_entities[id]['dy'] > 0){
-        entity_entities[id]['angle'] *= -1;
+    if(entity_entities[id]['dx'] < 0){
+        entity_entities[id]['angle'] += Math.PI;
     }
 }
 
