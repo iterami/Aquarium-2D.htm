@@ -81,7 +81,7 @@ function repo_drawlogic(){
         'pillar',
       ],
       'todo': function(entity){
-          canvas_buffer.fillRect(
+          canvas.fillRect(
             entity_entities[entity]['x'],
             0,
             100,
@@ -95,12 +95,12 @@ function repo_drawlogic(){
         'fish',
       ],
       'todo': function(entity){
-          canvas_buffer.save();
-          canvas_buffer.translate(
+          canvas.save();
+          canvas.translate(
             entity_entities[entity]['x'],
             entity_entities[entity]['y']
           );
-          canvas_buffer.rotate(entity_entities[entity]['angle']);
+          canvas.rotate(entity_entities[entity]['angle']);
 
           const xoffset = entity_entities[entity]['size'] * (entity_entities[entity]['dx'] > 0
             ? 1
@@ -132,7 +132,7 @@ function repo_drawlogic(){
             ],
           });
 
-          canvas_buffer.restore();
+          canvas.restore();
       },
     });
 }
