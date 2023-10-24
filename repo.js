@@ -190,7 +190,7 @@ function repo_init(){
       },
       'info': '<input id=add-fish type=button value="Add Fish [F]"><input id=restart type=button value=Restart>',
       'keybinds': {
-        70: {
+        'KeyF': {
           'todo': create_fish,
         },
       },
