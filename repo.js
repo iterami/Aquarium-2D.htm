@@ -8,7 +8,7 @@ function create_fish(){
           'max': 25,
         }) + 25;
 
-    }else if(fish_size < .88){
+    }else if(fish_size < .87){
         fish_size = core_random_integer({
           'max': 10,
         }) + 5;
