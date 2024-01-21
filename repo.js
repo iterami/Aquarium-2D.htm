@@ -188,7 +188,7 @@ function repo_init(){
           'onclick': core_repo_reset,
         },
       },
-      'info': '<input id=add-fish type=button value="Add Fish [F]"><input id=restart type=button value=Restart>',
+      'info': '<button id=add-fish type=button>Add Fish [F]</button><button id=restart type=button>Restart</button>',
       'keybinds': {
         'KeyF': {
           'todo': create_fish,
