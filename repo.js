@@ -72,9 +72,7 @@ function randomize_fish_movement(id){
 
 function repo_drawlogic(){
     canvas_setproperties({
-      'properties': {
-        'fillStyle': '#003',
-      },
+      'fillStyle': '#003',
     });
     entity_group_modify({
       'groups': [
