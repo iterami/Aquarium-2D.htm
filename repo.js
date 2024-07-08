@@ -109,24 +109,31 @@ function repo_drawlogic(){
               'fillStyle': entity_entities[entity]['color'],
             },
             'vertices': [
-              {
-                'type': 'moveTo',
-                'y': entity_entities[entity]['size'] / 2,
-              },
-              {
-                'x': xoffset,
-              },
-              {
-                'x': xoffset * 3,
-                'y': entity_entities[entity]['size'],
-              },
-              {
-                'x': xoffset * 3,
-              },
-              {
-                'x': xoffset,
-                'y': entity_entities[entity]['size'],
-              },
+              [
+                'moveTo',
+                0,
+                entity_entities[entity]['size'] / 2,
+              ],
+              [
+                'lineTo',
+                xoffset,
+                0,
+              ],
+              [
+                'lineTo',
+                xoffset * 3,
+                entity_entities[entity]['size'],
+              ],
+              [
+                'lineTo',
+                xoffset * 3,
+                0,
+              ],
+              [
+                'lineTo',
+                xoffset,
+                entity_entities[entity]['size'],
+              ],
             ],
           });
 
