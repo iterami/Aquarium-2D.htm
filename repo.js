@@ -49,24 +49,24 @@ function load_data(id){
     });
 }
 
-function randomize_fish_movement(id){
-    entity_entities[id]['dx'] = Math.random() * 10 - 5;
-    entity_entities[id]['dy'] = Math.random() * (entity_entities[id]['dx'] / 2) - entity_entities[id]['dx'] / 4;
-    entity_entities[id]['x'] = entity_entities[id]['dx'] < 0
-      ? -entity_entities[id]['size']
-      : entity_entities[id]['size'] + canvas_properties['width'];
-    entity_entities[id]['y'] = core_random_integer({
+function randomize_fish_movement(fish){
+    fish['dx'] = Math.random() * 10 - 5;
+    fish['dy'] = Math.random() * (fish['dx'] / 2) - fish['dx'] / 4;
+    fish['x'] = fish['dx'] < 0
+      ? -fish['size']
+      : fish['size'] + canvas_properties['width'];
+    fish['y'] = core_random_integer({
       'max': canvas_properties['height'],
     });
 
-    entity_entities[id]['angle'] = math_move_2d({
-      'x0': entity_entities[id]['x'],
-      'x1': entity_entities[id]['x'] + entity_entities[id]['dx'],
-      'y0': entity_entities[id]['y'],
-      'y1': entity_entities[id]['y'] + entity_entities[id]['dy'],
+    fish['angle'] = math_move_2d({
+      'x0': fish['x'],
+      'x1': fish['x'] + fish['dx'],
+      'y0': fish['y'],
+      'y1': fish['y'] + fish['dy'],
     })['angle'];
-    if(entity_entities[id]['dx'] < 0){
-        entity_entities[id]['angle'] += Math.PI;
+    if(fish['dx'] < 0){
+        fish['angle'] += Math.PI;
     }
 }
 
@@ -80,7 +80,7 @@ function repo_drawlogic(){
       ],
       'todo': function(entity){
           canvas.fillRect(
-            entity_entities[entity]['x'],
+            entity['x'],
             0,
             100,
             canvas_properties['height']
@@ -95,24 +95,24 @@ function repo_drawlogic(){
       'todo': function(entity){
           canvas.save();
           canvas.translate(
-            entity_entities[entity]['x'],
-            entity_entities[entity]['y']
+            entity['x'],
+            entity['y']
           );
-          canvas.rotate(entity_entities[entity]['angle']);
+          canvas.rotate(entity['angle']);
 
-          const xoffset = entity_entities[entity]['size'] * (entity_entities[entity]['dx'] > 0
+          const xoffset = entity['size'] * (entity['dx'] > 0
             ? 1
             : -1);
 
           canvas_draw_path({
             'properties': {
-              'fillStyle': entity_entities[entity]['color'],
+              'fillStyle': entity['color'],
             },
             'vertices': [
               [
                 'moveTo',
                 0,
-                entity_entities[entity]['size'] / 2,
+                entity['size'] / 2,
               ],
               [
                 'lineTo',
@@ -122,7 +122,7 @@ function repo_drawlogic(){
               [
                 'lineTo',
                 xoffset * 3,
-                entity_entities[entity]['size'],
+                entity['size'],
               ],
               [
                 'lineTo',
@@ -132,7 +132,7 @@ function repo_drawlogic(){
               [
                 'lineTo',
                 xoffset,
-                entity_entities[entity]['size'],
+                entity['size'],
               ],
             ],
           });
@@ -148,16 +148,16 @@ function repo_logic(){
         'fish',
       ],
       'todo': function(entity){
-          entity_entities[entity]['x'] -= entity_entities[entity]['dx'];
-          entity_entities[entity]['y'] -= entity_entities[entity]['dy'];
+          entity['x'] -= entity['dx'];
+          entity['y'] -= entity['dy'];
 
-          const size = entity_entities[entity]['size'] * 4;
-          if(entity_entities[entity]['x'] > canvas_properties['width'] + size
-            || entity_entities[entity]['x'] < -size){
-              entity_entities[entity]['x'] += entity_entities[entity]['dx'] < 0
+          const size = entity['size'] * 4;
+          if(entity['x'] > canvas_properties['width'] + size
+            || entity['x'] < -size){
+              entity['x'] += entity['dx'] < 0
                 ? -canvas_properties['width'] - size
                 : canvas_properties['width'] + size;
-              entity_entities[entity]['y'] = core_random_integer({
+              entity['y'] = core_random_integer({
                 'max': canvas_properties['height'],
               });
 
