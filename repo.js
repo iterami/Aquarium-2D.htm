@@ -142,37 +142,6 @@ function repo_drawlogic(){
     });
 }
 
-function repo_logic(){
-    entity_group_modify({
-      'groups': [
-        'fish',
-      ],
-      'todo': function(entity){
-          entity['x'] -= entity['dx'];
-          entity['y'] -= entity['dy'];
-
-          const size = entity['size'] * 4;
-          if(entity['x'] > canvas_properties['width'] + size
-            || entity['x'] < -size){
-              entity['x'] += entity['dx'] < 0
-                ? -canvas_properties['width'] - size
-                : canvas_properties['width'] + size;
-              entity['y'] = core_random_integer({
-                'max': canvas_properties['height'],
-              });
-
-              randomize_fish_movement(entity);
-          }
-      },
-    });
-
-    core_ui_update({
-      'ids': {
-        'fish': entity_info['fish']['count'],
-      },
-    });
-}
-
 function repo_init(){
     core_repo_init({
       'entities': {
@@ -216,4 +185,35 @@ function repo_init(){
     canvas_init();
 
     canvas_properties['clearColor'] = '#004';
+}
+
+function repo_logic(){
+    entity_group_modify({
+      'groups': [
+        'fish',
+      ],
+      'todo': function(entity){
+          entity['x'] -= entity['dx'];
+          entity['y'] -= entity['dy'];
+
+          const size = entity['size'] * 4;
+          if(entity['x'] > canvas_properties['width'] + size
+            || entity['x'] < -size){
+              entity['x'] += entity['dx'] < 0
+                ? -canvas_properties['width'] - size
+                : canvas_properties['width'] + size;
+              entity['y'] = core_random_integer({
+                'max': canvas_properties['height'],
+              });
+
+              randomize_fish_movement(entity);
+          }
+      },
+    });
+
+    core_ui_update({
+      'ids': {
+        'fish': entity_info['fish']['count'],
+      },
+    });
 }
