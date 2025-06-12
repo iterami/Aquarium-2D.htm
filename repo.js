@@ -4,19 +4,13 @@ function create_fish(){
     let fish_size = Math.random();
 
     if(fish_size < .6){
-        fish_size = core_random_integer({
-          'max': 25,
-        }) + 25;
+        fish_size = core_random_integer(25) + 25;
 
     }else if(fish_size < .87){
-        fish_size = core_random_integer({
-          'max': 10,
-        }) + 5;
+        fish_size = core_random_integer(10) + 5;
 
     }else{
-        fish_size = core_random_integer({
-          'max': 500,
-        }) + 50;
+        fish_size = core_random_integer(500) + 50;
     }
 
     randomize_fish_movement(entity_create({
@@ -39,9 +33,7 @@ function load_data(id){
     entity_create({
       'id': 'pillar',
       'properties': {
-        'x': core_random_integer({
-          'max': canvas_properties['width'],
-        }),
+        'x': core_random_integer(canvas_properties['width']),
       },
       'types': [
         'pillar',
@@ -55,9 +47,7 @@ function randomize_fish_movement(fish){
     fish['x'] = fish['dx'] < 0
       ? -fish['size']
       : fish['size'] + canvas_properties['width'];
-    fish['y'] = core_random_integer({
-      'max': canvas_properties['height'],
-    });
+    fish['y'] = core_random_integer(canvas_properties['height']);
 
     fish['angle'] = math_move_2d({
       'x0': fish['x'],
@@ -202,9 +192,7 @@ function repo_logic(){
               entity['x'] += entity['dx'] < 0
                 ? -canvas_properties['width'] - size
                 : canvas_properties['width'] + size;
-              entity['y'] = core_random_integer({
-                'max': canvas_properties['height'],
-              });
+              entity['y'] = core_random_integer(canvas_properties['height']);
 
               randomize_fish_movement(entity);
           }
