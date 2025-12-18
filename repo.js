@@ -145,11 +145,11 @@ function repo_init(){
         'add': {
           'onclick': create_fish,
         },
-        'restart': {
+        'start': {
           'onclick': canvas_setmode,
         },
       },
-      'info': '<button id=restart type=button>Restart</button>',
+      'info': '<button id=start type=button>Start New Tank</button>',
       'keybinds': {
         'KeyF': {
           'todo': create_fish,
