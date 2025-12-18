@@ -25,11 +25,6 @@ function create_fish(){
 }
 
 function load_data(id){
-    let loop_counter = 9;
-    do{
-        create_fish();
-    }while(loop_counter--);
-
     entity_create({
       'id': 'pillar',
       'properties': {
@@ -39,6 +34,8 @@ function load_data(id){
         'pillar',
       ],
     });
+
+    create_fish();
 }
 
 function randomize_fish_movement(fish){
