@@ -145,21 +145,21 @@ function repo_init(){
         'pillar': {},
       },
       'events': {
-        'add-fish': {
+        'add': {
           'onclick': create_fish,
         },
         'restart': {
           'onclick': canvas_setmode,
         },
       },
-      'info': '<button id=add-fish type=button>Add Fish [F]</button><button id=restart type=button>Restart</button>',
+      'info': '<button id=restart type=button>Restart</button>',
       'keybinds': {
         'KeyF': {
           'todo': create_fish,
         },
       },
       'title': 'Aquarium-2D.htm',
-      'ui': '<span id=fish></span> Fish',
+      'ui': '<button id=add type=button>Add Fish [F]</button> <span id=fish></span>',
     });
     entity_set({
       'type': 'pillar',
