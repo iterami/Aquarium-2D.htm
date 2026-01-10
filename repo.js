@@ -152,7 +152,7 @@ function repo_init(){
       'info': '<button id=start type=button>Start New Tank</button>',
       'keybinds': {
         'KeyF': {
-          'todo': create_fish,
+          'down': create_fish,
         },
       },
       'title': 'Aquarium-2D.htm',
