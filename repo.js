@@ -24,20 +24,6 @@ function create_fish(){
     }));
 }
 
-function load_data(id){
-    entity_create({
-      'id': 'pillar',
-      'properties': {
-        'x': core_random_integer(canvas_properties.width),
-      },
-      'types': [
-        'pillar',
-      ],
-    });
-
-    create_fish();
-}
-
 function randomize_fish_movement(fish){
     fish.dx = Math.random() * 10 - 5;
     fish.dy = Math.random() * (fish.dx / 2) - fish.dx / 4;
@@ -172,6 +158,20 @@ function repo_init(){
     canvas_init();
 
     canvas_properties.clearColor = '#004';
+}
+
+function repo_load(id){
+    entity_create({
+      'id': 'pillar',
+      'properties': {
+        'x': core_random_integer(canvas_properties.width),
+      },
+      'types': [
+        'pillar',
+      ],
+    });
+
+    create_fish();
 }
 
 function repo_logic(){
