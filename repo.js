@@ -24,6 +24,79 @@ function create_fish(){
     }));
 }
 
+function draw_fish(entity){
+    canvas.save();
+    canvas.translate(
+      entity.x,
+      entity.y
+    );
+    canvas.rotate(entity.angle);
+
+    const xoffset = entity.size * (entity.dx > 0
+      ? 1
+      : -1);
+
+    canvas_draw_path({
+      'properties': {
+        'fillStyle': entity.color,
+      },
+      'vertices': [
+        [
+          'moveTo',
+          0,
+          entity.size / 2,
+        ],
+        [
+          'lineTo',
+          xoffset,
+          0,
+        ],
+        [
+          'lineTo',
+          xoffset * 3,
+          entity.size,
+        ],
+        [
+          'lineTo',
+          xoffset * 3,
+          0,
+        ],
+        [
+          'lineTo',
+          xoffset,
+          entity.size,
+        ],
+      ],
+    });
+
+    canvas.restore();
+}
+
+function draw_pillar(entity){
+    canvas.fillRect(
+      entity.x,
+      0,
+      100,
+      canvas_properties.height
+    );
+}
+
+function move_fish(entity){
+    entity.x -= entity.dx;
+    entity.y -= entity.dy;
+
+    const size = entity.size * 4;
+    if(entity.x > canvas_properties.width + size
+      || entity.x < -size){
+        entity.x += entity.dx < 0
+          ? -canvas_properties.width - size
+          : canvas_properties.width + size;
+        entity.y = core_random_integer(canvas_properties.height);
+
+        randomize_fish_movement(entity);
+    }
+}
+
 function randomize_fish_movement(fish){
     fish.dx = Math.random() * 10 - 5;
     fish.dy = Math.random() * (fish.dx / 2) - fish.dx / 4;
@@ -51,67 +124,14 @@ function repo_drawlogic(){
       'groups': [
         'pillar',
       ],
-      'todo': function(entity){
-          canvas.fillRect(
-            entity.x,
-            0,
-            100,
-            canvas_properties.height
-          );
-      },
+      'todo': draw_pillar,
     });
 
     entity_group_modify({
       'groups': [
         'fish',
       ],
-      'todo': function(entity){
-          canvas.save();
-          canvas.translate(
-            entity.x,
-            entity.y
-          );
-          canvas.rotate(entity.angle);
-
-          const xoffset = entity.size * (entity.dx > 0
-            ? 1
-            : -1);
-
-          canvas_draw_path({
-            'properties': {
-              'fillStyle': entity.color,
-            },
-            'vertices': [
-              [
-                'moveTo',
-                0,
-                entity.size / 2,
-              ],
-              [
-                'lineTo',
-                xoffset,
-                0,
-              ],
-              [
-                'lineTo',
-                xoffset * 3,
-                entity.size,
-              ],
-              [
-                'lineTo',
-                xoffset * 3,
-                0,
-              ],
-              [
-                'lineTo',
-                xoffset,
-                entity.size,
-              ],
-            ],
-          });
-
-          canvas.restore();
-      },
+      'todo': draw_fish,
     });
 }
 
@@ -179,21 +199,7 @@ function repo_logic(){
       'groups': [
         'fish',
       ],
-      'todo': function(entity){
-          entity.x -= entity.dx;
-          entity.y -= entity.dy;
-
-          const size = entity.size * 4;
-          if(entity.x > canvas_properties.width + size
-            || entity.x < -size){
-              entity.x += entity.dx < 0
-                ? -canvas_properties.width - size
-                : canvas_properties.width + size;
-              entity.y = core_random_integer(canvas_properties.height);
-
-              randomize_fish_movement(entity);
-          }
-      },
+      'todo': move_fish,
     });
 
     core_ui_update({
