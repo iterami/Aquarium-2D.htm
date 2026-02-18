@@ -155,7 +155,7 @@ function repo_init(){
           'onclick': canvas_setmode,
         },
       },
-      'info': '<button id=start type=button>Start New Tank</button>',
+      'info': '<button class=medium id=start type=button>Start New Tank</button>',
       'keybinds': {
         'KeyF': {
           'down': create_fish,
