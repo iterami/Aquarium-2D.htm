@@ -177,7 +177,7 @@ function repo_init(){
     });
     canvas_init();
 
-    canvas_properties.clearColor = '#004';
+    canvas_properties.clearColor = '#007';
 }
 
 function repo_load(id){
