@@ -22,6 +22,12 @@ function create_fish(){
         'fish',
       ],
     }));
+
+    core_ui_update({
+      'ids': {
+        'fish': entity_info.fish.count,
+      },
+    });
 }
 
 function draw_fish(entity){
@@ -200,11 +206,5 @@ function repo_logic(){
         'fish',
       ],
       'todo': move_fish,
-    });
-
-    core_ui_update({
-      'ids': {
-        'fish': entity_info.fish.count,
-      },
     });
 }
