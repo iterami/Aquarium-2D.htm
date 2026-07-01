@@ -6,7 +6,7 @@ function create_fish(){
     if(fish_size < .6){
         fish_size = core_random_integer(25) + 25;
 
-    }else if(fish_size < .87){
+    }else if(fish_size < .9){
         fish_size = core_random_integer(10) + 5;
 
     }else{
@@ -18,14 +18,12 @@ function create_fish(){
         'color': '#' + core_random_hex(),
         'size': fish_size,
       },
-      'types': [
-        'fish',
-      ],
+      'types': ['fish'],
     }));
 
     core_ui_update({
       'ids': {
-        'fish': entity_info.fish.count,
+        'add': entity_info.fish.count + ' Fish',
       },
     });
 }
@@ -38,10 +36,7 @@ function draw_fish(entity){
     );
     canvas.rotate(entity.angle);
 
-    const xoffset = entity.size * (entity.dx > 0
-      ? 1
-      : -1);
-
+    const xoffset = entity.size * (entity.dx > 0 ? 1 : -1);
     canvas_draw_path({
       'properties': {
         'fillStyle': entity.color,
@@ -92,19 +87,16 @@ function move_fish(entity){
     entity.y -= entity.dy;
 
     const size = entity.size * 4;
-    if(entity.x > canvas_properties.width + size
-      || entity.x < -size){
-        entity.x += entity.dx < 0
-          ? -canvas_properties.width - size
-          : canvas_properties.width + size;
-        entity.y = core_random_integer(canvas_properties.height);
-
+    if(entity.x < -size || entity.x > canvas_properties.width + size){
         randomize_fish_movement(entity);
     }
 }
 
 function randomize_fish_movement(fish){
     fish.dx = Math.random() * 10 - 5;
+    if(Math.abs(fish.dx) < .1){
+        fish.dx = Math.sign(fish.dx);
+    }
     fish.dy = Math.random() * (fish.dx / 2) - fish.dx / 4;
     fish.x = fish.dx < 0
       ? -fish.size
@@ -127,32 +119,17 @@ function repo_drawlogic(){
       'fillStyle': '#003',
     });
     entity_group_modify({
-      'groups': [
-        'pillar',
-      ],
+      'groups': ['pillar'],
       'todo': draw_pillar,
     });
-
     entity_group_modify({
-      'groups': [
-        'fish',
-      ],
+      'groups': ['fish'],
       'todo': draw_fish,
     });
 }
 
 function repo_init(){
     core_repo_init({
-      'entities': {
-        'fish': {
-          'properties': {
-            'angle': 0,
-            'dx': 0,
-            'dy': 0,
-          },
-        },
-        'pillar': {},
-      },
       'events': {
         'add': {
           'onclick': create_fish,
@@ -162,13 +139,8 @@ function repo_init(){
         },
       },
       'info': '<button class=medium id=start type=button>Start New Tank</button>',
-      'keybinds': {
-        'KeyF': {
-          'down': create_fish,
-        },
-      },
       'title': 'Aquarium-2D.htm',
-      'ui': '<button id=add type=button>Add Fish [F]</button> <span id=fish></span>',
+      'ui': '<button id=add type=button>1 Fish</button>',
     });
     entity_set({
       'type': 'pillar',
@@ -190,11 +162,9 @@ function repo_load(id){
     entity_create({
       'id': 'pillar',
       'properties': {
-        'x': core_random_integer(canvas_properties.width),
+        'x': core_random_integer(canvas_properties.width) - 50,
       },
-      'types': [
-        'pillar',
-      ],
+      'types': ['pillar'],
     });
 
     create_fish();
@@ -202,9 +172,7 @@ function repo_load(id){
 
 function repo_logic(){
     entity_group_modify({
-      'groups': [
-        'fish',
-      ],
+      'groups': ['fish'],
       'todo': move_fish,
     });
 }
